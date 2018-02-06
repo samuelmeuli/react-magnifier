@@ -38,13 +38,13 @@ const defaultProps = {
 };
 
 
-export default class ImageMagnifier extends Component {
+export default class Magnifier extends Component {
 
 	constructor(props) {
 		super(props);
 
 		if (!this.props.imgSrc) {
-			throw Error('Missing imgSrc prop for ImageMagnifier');
+			throw Error('Missing imgSrc prop');
 		}
 
 		this.state = {
@@ -76,7 +76,7 @@ export default class ImageMagnifier extends Component {
 	render() {
 		return (
 			<div
-				className="image-magnifier-wrapper"
+				className="magnifier"
 				style={{
 					position: 'relative',
 					display: 'inline-block'
@@ -108,5 +108,5 @@ export default class ImageMagnifier extends Component {
 }
 
 
-ImageMagnifier.propTypes = propTypes;
-ImageMagnifier.defaultProps = defaultProps;
+Magnifier.propTypes = propTypes;
+Magnifier.defaultProps = defaultProps;

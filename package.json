@@ -1,10 +1,11 @@
 {
-	"name": "image-magnifier-react",
+	"name": "react-magnifier",
 	"version": "0.0.0",
-	"main": "lib/ImageMagnifier.js",
+	"main": "lib/Magnifier.js",
 	"license": "MIT",
 	"scripts": {
-		"start": "rollup -c --watch",
+		"start": "concurrently \"npm run watch\" \"npm run storybook\" -n \"R,S\" -c \"blue,yellow\" --k",
+		"watch": "rollup -c --watch",
 		"build": "rollup -c",
 		"storybook": "start-storybook -p 6006",
 		"lint": "eslint --ext .js src stories",
@@ -18,11 +19,16 @@
 		"react": "^16.0.0"
 	},
 	"devDependencies": {
+		"@storybook/addon-actions": "^3.3.12",
+		"@storybook/addon-links": "^3.3.12",
+		"@storybook/addons": "^3.3.12",
+		"@storybook/react": "^3.3.12",
 		"babel-core": "^6.26.0",
 		"babel-plugin-external-helpers": "^6.22.0",
 		"babel-preset-env": "^1.6.1",
 		"babel-preset-react": "^6.24.1",
-		"eslint": "^4.15.0",
+		"concurrently": "^3.5.1",
+		"eslint": "^4.17.0",
 		"eslint-config-airbnb": "^16.1.0",
 		"eslint-plugin-import": "^2.8.0",
 		"eslint-plugin-jsx-a11y": "^6.0.2",
@@ -31,11 +37,7 @@
 		"react": "^16.0.0",
 		"react-dom": "^16.0.0",
 		"rollup": "^0.55.1",
-		"rollup-plugin-babel": "^3.0.3",
-		"@storybook/react": "^3.3.11",
-		"@storybook/addon-actions": "^3.3.11",
-		"@storybook/addon-links": "^3.3.11",
-		"@storybook/addons": "^3.3.11"
+		"rollup-plugin-babel": "^3.0.3"
 	},
 	"files": [
 		"lib/"

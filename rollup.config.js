@@ -2,9 +2,9 @@ import babel from 'rollup-plugin-babel';
 
 
 export default {
-	input: 'src/ImageMagnifier',
+	input: 'src/Magnifier',
 	output: {
-		file: 'lib/ImageMagnifier.js',
+		file: 'lib/Magnifier.js',
 		format: 'cjs'
 	},
 	external: ['react', 'prop-types'],

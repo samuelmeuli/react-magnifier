@@ -1,22 +1,22 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
 
-import ImageMagnifier from '../lib/ImageMagnifier';
+import Magnifier from '../lib/Magnifier';
 import testImage from './test-image.jpg';
 import './style.css';
 
 
-storiesOf('Image Magnifier', module)
+storiesOf('Magnifier', module)
 	.add('Round', () => (
 		<div className="image-wrapper">
-			<ImageMagnifier
+			<Magnifier
 				imgSrc={testImage}
 			/>
 		</div>
 	))
 	.add('Square', () => (
 		<div className="image-wrapper">
-			<ImageMagnifier
+			<Magnifier
 				imgSrc={testImage}
 				round={false}
 			/>
