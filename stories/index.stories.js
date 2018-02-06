@@ -1,33 +1,38 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
+import { storiesOf, addDecorator } from '@storybook/react';
 
 import Magnifier from '../lib/Magnifier';
 import testImage from './test-image.jpg';
 import testImageSmall from './test-image-small.jpg';
-import './style.css';
 
+
+addDecorator(story => (
+	<div
+		style={{
+			display: 'flex',
+			justifyContent: 'center',
+			marginTop: 100
+		}}
+	>
+		{story()}
+	</div>
+));
 
 storiesOf('Magnifier', module)
 	.add('Round', () => (
-		<div className="image-wrapper">
-			<Magnifier
-				imgSrc={testImage}
-			/>
-		</div>
+		<Magnifier
+			imgSrc={testImage}
+		/>
 	))
 	.add('Square', () => (
-		<div className="image-wrapper">
-			<Magnifier
-				imgSrc={testImage}
-				mgShape="square"
-			/>
-		</div>
+		<Magnifier
+			imgSrc={testImage}
+			mgShape="square"
+		/>
 	))
 	.add('Different images', () => (
-		<div className="image-wrapper">
-			<Magnifier
-				imgSrc={testImageSmall}
-				zoomImgSrc={testImage}
-			/>
-		</div>
+		<Magnifier
+			imgSrc={testImageSmall}
+			zoomImgSrc={testImage}
+		/>
 	));
