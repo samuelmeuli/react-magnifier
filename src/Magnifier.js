@@ -18,7 +18,11 @@ const propTypes = {
 	// magnifying glass
 	mgWidth: PropTypes.number,
 	mgHeight: PropTypes.number,
-	mgShape: PropTypes.string
+	mgShape: PropTypes.string,
+	mgMouseOffsetX: PropTypes.number,
+	mgMouseOffsetY: PropTypes.number,
+	mgTouchOffsetX: PropTypes.number,
+	mgTouchOffsetY: PropTypes.number
 };
 
 const defaultProps = {
@@ -31,7 +35,11 @@ const defaultProps = {
 	// magnifying glass
 	mgWidth: 150,
 	mgHeight: 150,
-	mgShape: 'circle'
+	mgShape: 'circle',
+	mgMouseOffsetX: 0,
+	mgMouseOffsetY: 0,
+	mgTouchOffsetX: -50,
+	mgTouchOffsetY: -50
 };
 
 
@@ -47,7 +55,9 @@ export default class Magnifier extends Component {
 		this.state = {
 			showZoom: false,
 			relX: 0, // horizontal mouse position relative to image
-			relY: 0 // vertical mouse position relative to image
+			relY: 0, // vertical mouse position relative to image
+			mgOffsetX: 0,
+			mgOffsetY: 0
 		};
 
 		// function bindings
@@ -60,13 +70,31 @@ export default class Magnifier extends Component {
 
 		// get mouse/touch position
 		const imgBounds = e.target.getBoundingClientRect();
-		const left = e.clientX || e.targetTouches[0].pageX;
-		const top = e.clientY || e.targetTouches[0].pageY;
+		let left;
+		let top;
+		let mgOffsetX;
+		let mgOffsetY;
+		if (e.targetTouches) {
+			// touch input
+			left = e.targetTouches[0].pageX;
+			top = e.targetTouches[0].pageY;
+			mgOffsetX = this.props.mgTouchOffsetX;
+			mgOffsetY = this.props.mgTouchOffsetY;
+		}
+		else {
+			// mouse input
+			left = e.clientX;
+			top = e.clientY;
+			mgOffsetX = this.props.mgMouseOffsetX;
+			mgOffsetY = this.props.mgMouseOffsetY;
+		}
 
 		this.setState({
 			showZoom: true,
 			relX: (left - imgBounds.left) / e.target.clientWidth,
-			relY: (top - imgBounds.top) / e.target.clientHeight
+			relY: (top - imgBounds.top) / e.target.clientHeight,
+			mgOffsetX,
+			mgOffsetY
 		});
 	}
 
@@ -107,6 +135,8 @@ export default class Magnifier extends Component {
 					mgWidth={this.props.mgWidth}
 					mgHeight={this.props.mgHeight}
 					mgShape={this.props.mgShape}
+					mgOffsetX={this.state.mgOffsetX}
+					mgOffsetY={this.state.mgOffsetY}
 				/>
 			</div>
 		);

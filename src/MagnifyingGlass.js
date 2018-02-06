@@ -20,7 +20,9 @@ const propTypes = {
 	// magnifying glass
 	mgWidth: PropTypes.number.isRequired,
 	mgHeight: PropTypes.number.isRequired,
-	mgShape: PropTypes.string.isRequired
+	mgShape: PropTypes.string.isRequired,
+	mgOffsetX: PropTypes.number.isRequired,
+	mgOffsetY: PropTypes.number.isRequired
 };
 
 
@@ -31,10 +33,10 @@ export default function MagnifyingGlass(props) {
 		zIndex: 1,
 		width: props.mgWidth,
 		height: props.mgHeight,
-		left: `calc(${props.relX * 100}% - ${props.mgWidth / 2}px)`,
-		top: `calc(${props.relY * 100}% - ${props.mgHeight / 2}px)`,
+		left: `calc(${props.relX * 100}% - ${props.mgWidth / 2}px + ${props.mgOffsetX}px)`,
+		top: `calc(${props.relY * 100}% - ${props.mgHeight / 2}px + ${props.mgOffsetY}px)`,
 		backgroundImage: `url(${props.zoomImgSrc})`,
-		backgroundPosition: `${props.relX * 100}% ${props.relY * 100}%`,
+		backgroundPosition: `calc(${props.relX * 100}% - ${props.mgOffsetX}px) calc(${props.relY * 100}% - ${props.mgOffsetY}px)`,
 		backgroundRepeat: 'no-repeat',
 		border: '2px solid #EBEBEB',
 		borderRadius: props.mgShape === 'circle' ? '50%' : '0',
