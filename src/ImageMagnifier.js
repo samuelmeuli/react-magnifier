@@ -91,19 +91,17 @@ export default class ImageMagnifier extends Component {
 					onMouseOut={this.onMouseOut}
 					style={{ cursor: 'none' }}
 				/>
-				{
-					this.state.showZoom &&
-						<MagnifyingGlass
-							relX={this.state.relX}
-							relY={this.state.relY}
-							imgWidth={this.props.imgWidth}
-							zoomImgSrc={this.props.zoomImgSrc || this.props.imgSrc}
-							zoomImgWidth={this.props.zoomImgWidth}
-							zoomImgHeight={this.props.zoomImgHeight}
-							factor={this.props.factor}
-							round={this.props.round}
-						/>
-				}
+				<MagnifyingGlass
+					showZoom={this.state.showZoom}
+					relX={this.state.relX}
+					relY={this.state.relY}
+					imgWidth={this.props.imgWidth}
+					zoomImgSrc={this.props.zoomImgSrc || this.props.imgSrc}
+					zoomImgWidth={this.props.zoomImgWidth}
+					zoomImgHeight={this.props.zoomImgHeight}
+					factor={this.props.factor}
+					round={this.props.round}
+				/>
 			</div>
 		);
 	}
