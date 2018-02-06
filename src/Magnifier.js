@@ -6,10 +6,10 @@ import MagnifyingGlass from './MagnifyingGlass';
 
 const propTypes = {
 	// image
-	imgSrc: PropTypes.string.isRequired,
-	imgAlt: PropTypes.string,
-	imgWidth: PropTypes.number,
-	imgHeight: PropTypes.number,
+	src: PropTypes.string.isRequired,
+	alt: PropTypes.string,
+	width: PropTypes.number,
+	height: PropTypes.number,
 
 	// zoom image
 	zoomImgSrc: PropTypes.string,
@@ -23,7 +23,7 @@ const propTypes = {
 
 const defaultProps = {
 	// image
-	imgWidth: 500,
+	width: 500,
 
 	// zoom image
 	zoomFactor: 1.5,
@@ -40,8 +40,8 @@ export default class Magnifier extends Component {
 	constructor(props) {
 		super(props);
 
-		if (!this.props.imgSrc) {
-			throw Error('Missing imgSrc prop');
+		if (!this.props.src) {
+			throw Error('Missing src prop');
 		}
 
 		this.state = {
@@ -51,20 +51,26 @@ export default class Magnifier extends Component {
 		};
 
 		// function bindings
-		this.onMouseMove = this.onMouseMove.bind(this);
-		this.onMouseOut = this.onMouseOut.bind(this);
+		this.onMove = this.onMove.bind(this);
+		this.onLeave = this.onLeave.bind(this);
 	}
 
-	onMouseMove(e) {
+	onMove(e) {
+		e.preventDefault(); // disable scroll on touch
+
+		// get mouse/touch position
 		const imgBounds = e.target.getBoundingClientRect();
+		const left = e.clientX || e.targetTouches[0].pageX;
+		const top = e.clientY || e.targetTouches[0].pageY;
+
 		this.setState({
 			showZoom: true,
-			relX: (e.clientX - imgBounds.left) / e.target.clientWidth,
-			relY: (e.clientY - imgBounds.top) / e.target.clientHeight
+			relX: (left - imgBounds.left) / e.target.clientWidth,
+			relY: (top - imgBounds.top) / e.target.clientHeight
 		});
 	}
 
-	onMouseOut() {
+	onLeave() {
 		this.setState({
 			showZoom: false
 		});
@@ -80,21 +86,23 @@ export default class Magnifier extends Component {
 				}}
 			>
 				<img
-					src={this.props.imgSrc}
-					alt={this.props.imgAlt}
-					width={this.props.imgWidth}
-					height={this.props.imgHeight}
-					onMouseMove={this.onMouseMove}
-					onMouseOut={this.onMouseOut}
+					src={this.props.src}
+					alt={this.props.alt}
+					width={this.props.width}
+					height={this.props.height}
+					onMouseMove={this.onMove}
+					onMouseOut={this.onLeave}
+					onTouchMove={this.onMove}
+					onTouchEnd={this.onLeave}
 					style={{ cursor: 'none' }}
 				/>
 				<MagnifyingGlass
 					showZoom={this.state.showZoom}
 					relX={this.state.relX}
 					relY={this.state.relY}
-					imgWidth={this.props.imgWidth}
-					imgHeight={this.props.imgHeight}
-					zoomImgSrc={this.props.zoomImgSrc || this.props.imgSrc}
+					width={this.props.width}
+					height={this.props.height}
+					zoomImgSrc={this.props.zoomImgSrc || this.props.src}
 					zoomFactor={this.props.zoomFactor}
 					mgWidth={this.props.mgWidth}
 					mgHeight={this.props.mgHeight}

@@ -21,18 +21,18 @@ addDecorator(story => (
 storiesOf('Magnifier', module)
 	.add('Round', () => (
 		<Magnifier
-			imgSrc={testImage}
+			src={testImage}
 		/>
 	))
 	.add('Square', () => (
 		<Magnifier
-			imgSrc={testImage}
+			src={testImage}
 			mgShape="square"
 		/>
 	))
 	.add('Different images', () => (
 		<Magnifier
-			imgSrc={testImageSmall}
+			src={testImageSmall}
 			zoomImgSrc={testImage}
 		/>
 	));
