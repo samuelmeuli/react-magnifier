@@ -4,10 +4,11 @@
 	"main": "lib/Magnifier.js",
 	"license": "MIT",
 	"scripts": {
-		"start": "concurrently \"npm run watch\" \"npm run storybook\" -n \"R,S\" -c \"blue,yellow\" --k",
-		"watch": "rollup -c --watch",
-		"build": "rollup -c",
+		"start": "concurrently \"npm run rollup\" \"npm run storybook\" -n \"R,S\" -c \"blue,yellow\" --k",
+		"rollup": "rollup -c --watch",
 		"storybook": "start-storybook -p 6006",
+		"build": "rollup -c",
+		"build-demo": "build-storybook -c .storybook -o demo",
 		"lint": "eslint --ext .js src stories",
 		"precommit": "npm run lint",
 		"prepush": "npm run lint"
