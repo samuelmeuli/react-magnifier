@@ -13,28 +13,25 @@ const propTypes = {
 
 	// zoom image
 	zoomImgSrc: PropTypes.string,
-	zoomImgWidth: PropTypes.number,
-	zoomImgHeight: PropTypes.number,
+	zoomFactor: PropTypes.number,
 
 	// magnifying glass
-	factor: PropTypes.number,
-	round: PropTypes.bool
+	mgWidth: PropTypes.number,
+	mgHeight: PropTypes.number,
+	mgShape: PropTypes.string
 };
 
 const defaultProps = {
 	// image
-	imgAlt: null,
 	imgWidth: 500,
-	imgHeight: null,
 
 	// zoom image
-	zoomImgSrc: null,
-	zoomImgWidth: 150,
-	zoomImgHeight: 150,
+	zoomFactor: 1.5,
 
 	// magnifying glass
-	factor: 1.5,
-	round: true
+	mgWidth: 150,
+	mgHeight: 150,
+	mgShape: 'circle'
 };
 
 
@@ -96,11 +93,12 @@ export default class Magnifier extends Component {
 					relX={this.state.relX}
 					relY={this.state.relY}
 					imgWidth={this.props.imgWidth}
+					imgHeight={this.props.imgHeight}
 					zoomImgSrc={this.props.zoomImgSrc || this.props.imgSrc}
-					zoomImgWidth={this.props.zoomImgWidth}
-					zoomImgHeight={this.props.zoomImgHeight}
-					factor={this.props.factor}
-					round={this.props.round}
+					zoomFactor={this.props.zoomFactor}
+					mgWidth={this.props.mgWidth}
+					mgHeight={this.props.mgHeight}
+					mgShape={this.props.mgShape}
 				/>
 			</div>
 		);

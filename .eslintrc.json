@@ -21,6 +21,7 @@
 		"react/jsx-indent-props": [2, "tab"],
 
 		"import/no-extraneous-dependencies": 0,
-		"jsx-a11y/mouse-events-have-key-events": 0
+		"jsx-a11y/mouse-events-have-key-events": 0,
+		"react/require-default-props": 0
 	}
 }

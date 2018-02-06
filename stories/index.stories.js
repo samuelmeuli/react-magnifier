@@ -3,6 +3,7 @@ import { storiesOf } from '@storybook/react';
 
 import Magnifier from '../lib/Magnifier';
 import testImage from './test-image.jpg';
+import testImageSmall from './test-image-small.jpg';
 import './style.css';
 
 
@@ -18,7 +19,15 @@ storiesOf('Magnifier', module)
 		<div className="image-wrapper">
 			<Magnifier
 				imgSrc={testImage}
-				round={false}
+				mgShape="square"
+			/>
+		</div>
+	))
+	.add('Different images', () => (
+		<div className="image-wrapper">
+			<Magnifier
+				imgSrc={testImageSmall}
+				zoomImgSrc={testImage}
 			/>
 		</div>
 	));
