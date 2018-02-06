@@ -7,7 +7,7 @@ export default {
 		file: 'lib/ImageMagnifier.js',
 		format: 'cjs'
 	},
-	external: ['react'],
+	external: ['react', 'prop-types'],
 	plugins: [
 		babel({
 			exclude: 'node_modules/**',
