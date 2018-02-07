@@ -8,8 +8,8 @@ const propTypes = {
 	// image
 	src: PropTypes.string.isRequired,
 	alt: PropTypes.string,
-	width: PropTypes.number,
-	height: PropTypes.number,
+	width: PropTypes.string,
+	height: PropTypes.string,
 
 	// zoom image
 	zoomImgSrc: PropTypes.string,
@@ -27,7 +27,8 @@ const propTypes = {
 
 const defaultProps = {
 	// image
-	width: 500,
+	width: '100%',
+	height: 'auto',
 
 	// zoom image
 	zoomFactor: 1.5,
@@ -54,6 +55,8 @@ export default class Magnifier extends Component {
 
 		this.state = {
 			showZoom: false,
+			absWidth: null,
+			absHeight: null,
 			relX: 0, // horizontal mouse position relative to image
 			relY: 0, // vertical mouse position relative to image
 			mgOffsetX: 0,
@@ -110,34 +113,47 @@ export default class Magnifier extends Component {
 				className="magnifier"
 				style={{
 					position: 'relative',
-					display: 'inline-block'
+					display: 'inline-block',
+					width: this.props.width,
+					height: this.props.height
 				}}
 			>
 				<img
+					className="magnifier-image"
 					src={this.props.src}
 					alt={this.props.alt}
-					width={this.props.width}
-					height={this.props.height}
+					width="100%"
+					height="100%"
 					onMouseMove={this.onMove}
 					onMouseOut={this.onLeave}
 					onTouchMove={this.onMove}
 					onTouchEnd={this.onLeave}
 					style={{ cursor: 'none' }}
+					onLoad={(e) => {
+						this.setState({
+							absWidth: e.target.width,
+							absHeight: e.target.height
+						});
+					}}
 				/>
-				<MagnifyingGlass
-					showZoom={this.state.showZoom}
-					relX={this.state.relX}
-					relY={this.state.relY}
-					width={this.props.width}
-					height={this.props.height}
-					zoomImgSrc={this.props.zoomImgSrc || this.props.src}
-					zoomFactor={this.props.zoomFactor}
-					mgWidth={this.props.mgWidth}
-					mgHeight={this.props.mgHeight}
-					mgShape={this.props.mgShape}
-					mgOffsetX={this.state.mgOffsetX}
-					mgOffsetY={this.state.mgOffsetY}
-				/>
+				{
+					// show magnifying glass once image has loaded and its absolute size has been determined
+					this.state.absWidth &&
+						<MagnifyingGlass
+							showZoom={this.state.showZoom}
+							absWidth={this.state.absWidth}
+							absHeight={this.state.absHeight}
+							relX={this.state.relX}
+							relY={this.state.relY}
+							zoomImgSrc={this.props.zoomImgSrc || this.props.src}
+							zoomFactor={this.props.zoomFactor}
+							mgWidth={this.props.mgWidth}
+							mgHeight={this.props.mgHeight}
+							mgShape={this.props.mgShape}
+							mgOffsetX={this.state.mgOffsetX}
+							mgOffsetY={this.state.mgOffsetY}
+						/>
+				}
 			</div>
 		);
 	}

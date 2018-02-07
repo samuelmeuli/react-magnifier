@@ -10,8 +10,8 @@ const propTypes = {
 	relY: PropTypes.number.isRequired,
 
 	// image
-	width: PropTypes.number,
-	height: PropTypes.number,
+	absWidth: PropTypes.number,
+	absHeight: PropTypes.number,
 
 	// zoom image
 	zoomImgSrc: PropTypes.string.isRequired,
@@ -38,22 +38,12 @@ export default function MagnifyingGlass(props) {
 		backgroundImage: `url(${props.zoomImgSrc})`,
 		backgroundPosition: `calc(${props.relX * 100}% - ${props.mgOffsetX}px) calc(${props.relY * 100}% - ${props.mgOffsetY}px)`,
 		backgroundRepeat: 'no-repeat',
+		backgroundSize: `${props.zoomFactor * props.absWidth}% ${props.zoomFactor * props.absHeight}%`,
 		border: '2px solid #EBEBEB',
 		borderRadius: props.mgShape === 'circle' ? '50%' : '0',
 		boxShadow: '2px 2px 3px rgba(0, 0, 0, 0.3)',
 		pointerEvents: 'none'
 	};
-
-	// zoomImg size
-	if (props.height && props.width) {
-		style.backgroundSize = `${props.zoomFactor * props.width}% ${props.zoomFactor * props.height}%`;
-	}
-	else if (props.height && !props.width) {
-		style.backgroundSize = `auto ${props.zoomFactor * props.height}%`;
-	}
-	else if (!props.height && props.width) {
-		style.backgroundSize = `${props.zoomFactor * props.width}% auto`;
-	}
 
 	// show/hide magnifying glass (opacity needed for transition)
 	if (props.showZoom) {

@@ -22,17 +22,20 @@ storiesOf('Magnifier', module)
 	.add('Round', () => (
 		<Magnifier
 			src={testImage}
+			width="50%"
 		/>
 	))
 	.add('Square', () => (
 		<Magnifier
 			src={testImage}
 			mgShape="square"
+			width="50%"
 		/>
 	))
 	.add('Different images', () => (
 		<Magnifier
 			src={testImageSmall}
 			zoomImgSrc={testImage}
+			width="50%"
 		/>
 	));
