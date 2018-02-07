@@ -20,7 +20,7 @@ const propTypes = {
 	// magnifying glass
 	mgWidth: PropTypes.number.isRequired,
 	mgHeight: PropTypes.number.isRequired,
-	mgShape: PropTypes.string.isRequired,
+	mgShape: PropTypes.oneOf(['circle', 'square']).isRequired,
 	mgOffsetX: PropTypes.number.isRequired,
 	mgOffsetY: PropTypes.number.isRequired
 };

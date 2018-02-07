@@ -8,8 +8,8 @@ const propTypes = {
 	// image
 	src: PropTypes.string.isRequired,
 	alt: PropTypes.string,
-	width: PropTypes.string,
-	height: PropTypes.string,
+	width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+	height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 
 	// zoom image
 	zoomImgSrc: PropTypes.string,
@@ -18,7 +18,7 @@ const propTypes = {
 	// magnifying glass
 	mgWidth: PropTypes.number,
 	mgHeight: PropTypes.number,
-	mgShape: PropTypes.string,
+	mgShape: PropTypes.oneOf(['circle', 'square']),
 	mgMouseOffsetX: PropTypes.number,
 	mgMouseOffsetY: PropTypes.number,
 	mgTouchOffsetX: PropTypes.number,
