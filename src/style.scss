@@ -1,0 +1,27 @@
+.magnifier {
+	position: relative;
+	display: inline-block;
+}
+
+.magnifier-image {
+	cursor: none;
+}
+
+.magnifying-glass {
+	position: absolute;
+	z-index: 1;
+	transition: opacity 0.3s;
+	background-repeat: no-repeat;
+	border: 2px solid #EBEBEB;
+	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
+	pointer-events: none;
+	opacity: 0; // needed for transition
+
+	&.circle {
+		border-radius: 50%;
+	}
+
+	&.visible {
+		opacity: 1; // needed for transition
+	}
+}

@@ -21,7 +21,7 @@
 		"storybook": "start-storybook -p 6006",
 		"build": "rollup -c",
 		"build-demo": "build-storybook -c .storybook -o demo",
-		"lint": "eslint --ext .js src stories",
+		"lint": "eslint .",
 		"precommit": "npm run lint",
 		"prepush": "npm run lint"
 	},
@@ -47,10 +47,13 @@
 		"eslint-plugin-jsx-a11y": "^6.0.2",
 		"eslint-plugin-react": "^7.5.1",
 		"husky": "^0.14.3",
+		"node-sass": "^4.7.2",
+		"postcss": "^6.0.17",
 		"react": "^16.0.0",
 		"react-dom": "^16.0.0",
 		"rollup": "^0.55.1",
-		"rollup-plugin-babel": "^3.0.3"
+		"rollup-plugin-babel": "^3.0.3",
+		"rollup-plugin-postcss": "^1.2.8"
 	},
 	"files": [
 		"lib/"
