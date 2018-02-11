@@ -90,13 +90,24 @@ export default class Magnifier extends Component {
 	onTouchMove(e) {
 		e.preventDefault(); // disable scroll on touch
 		const imgBounds = e.target.getBoundingClientRect();
-		this.setState({
-			showZoom: true,
-			relX: (e.targetTouches[0].pageX - imgBounds.left) / e.target.clientWidth,
-			relY: (e.targetTouches[0].pageY - imgBounds.top) / e.target.clientHeight,
-			mgOffsetX: this.props.mgTouchOffsetX,
-			mgOffsetY: this.props.mgTouchOffsetY
-		});
+		const relX = (e.targetTouches[0].pageX - imgBounds.left) / e.target.clientWidth;
+		const relY = (e.targetTouches[0].pageY - imgBounds.top) / e.target.clientHeight;
+
+		// only show magnifying glass if touch is inside image
+		if (relX >= 0 && relY >= 0 && relX <= 1 && relY <= 1) {
+			this.setState({
+				showZoom: true,
+				relX,
+				relY,
+				mgOffsetX: this.props.mgTouchOffsetX,
+				mgOffsetY: this.props.mgTouchOffsetY
+			});
+		}
+		else {
+			this.setState({
+				showZoom: false
+			});
+		}
 	}
 
 	onMouseOut() {
@@ -154,7 +165,7 @@ export default class Magnifier extends Component {
 						left: `calc(${this.state.relX * 100}% - ${this.props.mgWidth / 2}px + ${this.state.mgOffsetX}px)`,
 						top: `calc(${this.state.relY * 100}% - ${this.props.mgHeight / 2}px + ${this.state.mgOffsetY}px)`,
 						backgroundImage: `url(${this.props.zoomImgSrc || this.props.src})`,
-						backgroundPosition: `calc(${this.state.relX * 100}% - ${this.state.mgOffsetX}px) calc(${this.state.relY * 100}% - ${this.state.mgOffsetY}px)`,
+						backgroundPosition: `${this.state.relX * 100}% ${this.state.relY * 100}%`,
 						backgroundSize: `${this.props.zoomFactor * this.state.absWidth}% ${this.props.zoomFactor * this.state.absHeight}%`
 					}}
 				/>
