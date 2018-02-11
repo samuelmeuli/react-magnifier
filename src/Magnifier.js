@@ -87,6 +87,10 @@ export default class Magnifier extends Component {
 		});
 	}
 
+	onTouchStart(e) {
+		e.preventDefault(); // prevent mouse event from being fired
+	}
+
 	onTouchMove(e) {
 		e.preventDefault(); // disable scroll on touch
 		const imgBounds = e.target.getBoundingClientRect();
@@ -148,6 +152,7 @@ export default class Magnifier extends Component {
 					height="100%"
 					onMouseMove={this.onMouseMove}
 					onMouseOut={this.onMouseOut}
+					onTouchStart={this.onTouchStart}
 					onTouchMove={this.onTouchMove}
 					onTouchEnd={this.onTouchEnd}
 					onLoad={(e) => {
