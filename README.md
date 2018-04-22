@@ -1,7 +1,7 @@
 # react-magnifier
 
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/smeuli/react-magnifier/blob/master/LICENSE)
-[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/smeuli/react-magnifier/pulls)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/samuelmeuli/react-magnifier/blob/master/LICENSE)
+[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/samuelmeuli/react-magnifier/pulls)
 
 **React component for zooming in on images**
 
@@ -9,7 +9,7 @@
 * supports touch screens
 * allows using different files for large image and magnifying glass (e.g. thumbnail and high-resolution image)
 
-→ **[Demo](https://smeuli.github.io/react-magnifier)**
+→ **[Demo](https://samuelmeuli.github.io/react-magnifier)**
 
 <p align="center">
   <img src=".github/demo.gif" width=600 alt="Demo">
