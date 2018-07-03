@@ -26,34 +26,34 @@
 		"prepush": "npm run lint"
 	},
 	"dependencies": {
-		"prop-types": "^15.6.0"
+		"prop-types": "^15.6.2"
 	},
 	"peerDependencies": {
 		"react": "^16.0.0"
 	},
 	"devDependencies": {
-		"@storybook/addon-actions": "^3.3.12",
-		"@storybook/addon-links": "^3.3.12",
-		"@storybook/addons": "^3.3.12",
-		"@storybook/react": "^3.3.12",
-		"babel-core": "^6.26.0",
+		"@storybook/addon-actions": "^3.4.8",
+		"@storybook/addon-links": "^3.4.8",
+		"@storybook/addons": "^3.4.8",
+		"@storybook/react": "^3.4.8",
+		"babel-core": "^6.26.3",
 		"babel-plugin-external-helpers": "^6.22.0",
-		"babel-preset-env": "^1.6.1",
+		"babel-preset-env": "^1.7.0",
 		"babel-preset-react": "^6.24.1",
-		"concurrently": "^3.5.1",
-		"eslint": "^4.17.0",
+		"concurrently": "^3.6.0",
+		"eslint": "^4.19.1",
 		"eslint-config-airbnb": "^16.1.0",
-		"eslint-plugin-import": "^2.8.0",
+		"eslint-plugin-import": "^2.13.0",
 		"eslint-plugin-jsx-a11y": "^6.0.2",
-		"eslint-plugin-react": "^7.5.1",
+		"eslint-plugin-react": "^7.10.0",
 		"husky": "^0.14.3",
-		"node-sass": "^4.7.2",
-		"postcss": "^6.0.17",
-		"react": "^16.0.0",
-		"react-dom": "^16.0.0",
-		"rollup": "^0.55.1",
-		"rollup-plugin-babel": "^3.0.3",
-		"rollup-plugin-postcss": "^1.2.8"
+		"node-sass": "^4.9.0",
+		"postcss": "^6.0.23",
+		"react": "^16.4.1",
+		"react-dom": "^16.4.1",
+		"rollup": "^0.62.0",
+		"rollup-plugin-babel": "^3.0.7",
+		"rollup-plugin-postcss": "^1.6.2"
 	},
 	"files": [
 		"lib/"
