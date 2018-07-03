@@ -76,4 +76,4 @@ Prop | Type | Default | Description
 * `git clone`
 * `npm install`
 * `npm start` to generate the library bundle using [Rollup](https://github.com/rollup/rollup)
-* Open `localhost:6006` to see the component in action using [Storybook](https://github.com/storybooks/storybook)
+* Open `localhost:3000` to see the component in action using [Storybook](https://github.com/storybooks/storybook)
