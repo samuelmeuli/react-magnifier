@@ -9,5 +9,5 @@ Thumbs.db
 node_modules/
 
 # build output
-demo/
+dist/
 lib/
