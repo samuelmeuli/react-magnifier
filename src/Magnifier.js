@@ -45,7 +45,6 @@ const defaultProps = {
 
 
 export default class Magnifier extends Component {
-
 	constructor(props) {
 		super(props);
 
@@ -74,6 +73,24 @@ export default class Magnifier extends Component {
 		this.onMouseOut = this.onMouseOut.bind(this);
 		this.onTouchMove = this.onTouchMove.bind(this);
 		this.onTouchEnd = this.onTouchEnd.bind(this);
+	}
+
+	componentDidMount() {
+		// Add non-passive event listeners to 'nv' element (assigned in render function)
+		this.element.addEventListener('mousemove', this.onMouseMove, { passive: false });
+		this.element.addEventListener('mouseout', this.onMouseOut, { passive: false });
+		this.element.addEventListener('touchstart', this.onTouchStart, { passive: false });
+		this.element.addEventListener('touchmove', this.onTouchMove, { passive: false });
+		this.element.addEventListener('touchend', this.onTouchEnd, { passive: false });
+	}
+
+	componentWillUnmount() {
+		// Remove all event listeners
+		this.element.removeEventListener('mousemove', this.onMouseMove);
+		this.element.removeEventListener('mouseout', this.onMouseMove);
+		this.element.removeEventListener('touchstart', this.onMouseMove);
+		this.element.removeEventListener('touchmove', this.onMouseMove);
+		this.element.removeEventListener('touchend', this.onMouseMove);
 	}
 
 	onMouseMove(e) {
@@ -150,16 +167,14 @@ export default class Magnifier extends Component {
 					alt={this.props.alt}
 					width="100%"
 					height="100%"
-					onMouseMove={this.onMouseMove}
-					onMouseOut={this.onMouseOut}
-					onTouchStart={this.onTouchStart}
-					onTouchMove={this.onTouchMove}
-					onTouchEnd={this.onTouchEnd}
 					onLoad={(e) => {
 						this.setState({
 							absWidth: e.target.width,
 							absHeight: e.target.height
 						});
+					}}
+					ref={(e) => {
+						this.element = e;
 					}}
 				/>
 				<div
