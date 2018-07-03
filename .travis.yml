@@ -4,12 +4,10 @@ node_js: "node"
 
 script: npm run build
 
-before_deploy: npm run build-demo
-
 deploy:
   provider: pages
   skip-cleanup: true
   github-token: $GITHUB_TOKEN
-  local-dir: demo
+  local-dir: dist
   on:
     branch: master
