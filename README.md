@@ -27,7 +27,7 @@ npm install react-magnifier
 Add the component to your React application:
 
 ```jsx
-import Magnifier from 'magnifier-react';
+import Magnifier from 'react-magnifier';
 import yourImage from './path/to/image';
 
 // Somewhere in your code:
