@@ -111,8 +111,8 @@ export default class Magnifier extends Component {
 	onTouchMove(e) {
 		e.preventDefault(); // disable scroll on touch
 		const imgBounds = e.target.getBoundingClientRect();
-		const relX = (e.targetTouches[0].pageX - imgBounds.left) / e.target.clientWidth;
-		const relY = (e.targetTouches[0].pageY - imgBounds.top) / e.target.clientHeight;
+		const relX = (e.targetTouches[0].clientX - imgBounds.left) / e.target.clientWidth;
+		const relY = (e.targetTouches[0].clientY - imgBounds.top) / e.target.clientHeight;
 
 		// only show magnifying glass if touch is inside image
 		if (relX >= 0 && relY >= 0 && relX <= 1 && relY <= 1) {
