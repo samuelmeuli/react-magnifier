@@ -1,8 +1,5 @@
 # react-magnifier
 
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/samuelmeuli/react-magnifier/blob/master/LICENSE)
-[![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/samuelmeuli/react-magnifier/pulls)
-
 **React component for zooming in on images**
 
 * simple and customizable
@@ -41,8 +38,8 @@ Prop | Type | Default | Description
 ---- | ---- | ------- | -----------
 `src` (required) | String | – | URL/path of the large image
 `alt` | String | – | Alternate text for the large image
+`height` | Number/String | `'auto'` | Image height (absolute or relative values possible)
 `width` | Number/String | `'100%'` | Image width (absolute or relative values possible)
-`height` | Number/String | `'auto'` | Image width (absolute or relative values possible)
 `zoomImgSrc` | String | – | URL/path of the image inside the magnifying glass (if not specified, the large image will be used)
 `zoomFactor` | Number | `1.5` | Factor by which the zoom image will be scaled (based on the size of the large image)
 `mgWidth` | Number | `150` | Width of the magnifying glass in px
