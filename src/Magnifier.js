@@ -6,17 +6,17 @@ import './style.scss';
 
 
 const propTypes = {
-	// image
+	// Image
 	src: PropTypes.string.isRequired,
 	alt: PropTypes.string,
 	width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 
-	// zoom image
+	// Zoom image
 	zoomImgSrc: PropTypes.string,
 	zoomFactor: PropTypes.number,
 
-	// magnifying glass
+	// Magnifying glass
 	mgWidth: PropTypes.number,
 	mgHeight: PropTypes.number,
 	mgShape: PropTypes.oneOf(['circle', 'square']),
@@ -27,14 +27,16 @@ const propTypes = {
 };
 
 const defaultProps = {
-	// image
+	// Image
+	alt: null,
 	width: '100%',
 	height: 'auto',
 
-	// zoom image
+	// Zoom image
+	zoomImgSrc: null,
 	zoomFactor: 1.5,
 
-	// magnifying glass
+	// Magnifying glass
 	mgWidth: 150,
 	mgHeight: 150,
 	mgShape: 'circle',
@@ -43,7 +45,6 @@ const defaultProps = {
 	mgTouchOffsetX: -50,
 	mgTouchOffsetY: -50
 };
-
 
 export default class Magnifier extends Component {
 	constructor(props) {
@@ -56,20 +57,20 @@ export default class Magnifier extends Component {
 		this.state = {
 			showZoom: false,
 
-			// absoulte image size
+			// Absolute image size
 			absWidth: null,
 			absHeight: null,
 
-			// magnifying glass offset
+			// Magnifying glass offset
 			mgOffsetX: 0,
 			mgOffsetY: 0,
 
-			// mouse position relative to image
+			// Mouse position relative to image
 			relX: 0,
 			relY: 0
 		};
 
-		// function bindings
+		// Function bindings
 		this.onMouseMove = throttle(this.onMouseMove.bind(this), 20, { trailing: false });
 		this.onMouseOut = this.onMouseOut.bind(this);
 		this.onTouchMove = throttle(this.onTouchMove.bind(this), 20, { trailing: false });
@@ -106,16 +107,16 @@ export default class Magnifier extends Component {
 	}
 
 	onTouchStart(e) {
-		e.preventDefault(); // prevent mouse event from being fired
+		e.preventDefault(); // Prevent mouse event from being fired
 	}
 
 	onTouchMove(e) {
-		e.preventDefault(); // disable scroll on touch
+		e.preventDefault(); // Disable scroll on touch
 		const imgBounds = e.target.getBoundingClientRect();
 		const relX = (e.targetTouches[0].clientX - imgBounds.left) / e.target.clientWidth;
 		const relY = (e.targetTouches[0].clientY - imgBounds.top) / e.target.clientHeight;
 
-		// only show magnifying glass if touch is inside image
+		// Only show magnifying glass if touch is inside image
 		if (relX >= 0 && relY >= 0 && relX <= 1 && relY <= 1) {
 			this.setState({
 				showZoom: true,
@@ -124,8 +125,7 @@ export default class Magnifier extends Component {
 				mgOffsetX: this.props.mgTouchOffsetX,
 				mgOffsetY: this.props.mgTouchOffsetY
 			});
-		}
-		else {
+		} else {
 			this.setState({
 				showZoom: false
 			});
@@ -145,7 +145,7 @@ export default class Magnifier extends Component {
 	}
 
 	render() {
-		// show/hide magnifying glass (opacity needed for transition)
+		// Show/hide magnifying glass (opacity needed for transition)
 		let mgClasses = 'magnifying-glass';
 		if (this.state.showZoom) {
 			mgClasses += ' visible';
@@ -194,7 +194,6 @@ export default class Magnifier extends Component {
 		);
 	}
 }
-
 
 Magnifier.propTypes = propTypes;
 Magnifier.defaultProps = defaultProps;
