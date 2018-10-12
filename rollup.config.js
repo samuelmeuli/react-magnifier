@@ -8,7 +8,7 @@ export default {
 		file: 'lib/Magnifier.js',
 		format: 'cjs'
 	},
-	external: ['react', 'prop-types'],
+	external: ['react', 'prop-types', 'lodash.throttle'],
 	plugins: [
 		postcss(),
 		babel({

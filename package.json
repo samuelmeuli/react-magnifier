@@ -27,6 +27,7 @@
 		"prepush": "npm run lint"
 	},
 	"dependencies": {
+		"lodash.throttle": "^4.1.1",
 		"prop-types": "^15.6.2"
 	},
 	"peerDependencies": {

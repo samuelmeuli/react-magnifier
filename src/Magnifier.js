@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import throttle from 'lodash.throttle';
 
 import './style.scss';
 
@@ -69,9 +70,9 @@ export default class Magnifier extends Component {
 		};
 
 		// function bindings
-		this.onMouseMove = this.onMouseMove.bind(this);
+		this.onMouseMove = throttle(this.onMouseMove.bind(this), 20, { trailing: false });
 		this.onMouseOut = this.onMouseOut.bind(this);
-		this.onTouchMove = this.onTouchMove.bind(this);
+		this.onTouchMove = throttle(this.onTouchMove.bind(this), 20, { trailing: false });
 		this.onTouchEnd = this.onTouchEnd.bind(this);
 	}
 
