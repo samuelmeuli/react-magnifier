@@ -2,9 +2,9 @@
 
 **React component for zooming in on images**
 
-* simple and customizable
-* supports touch screens
-* allows using different files for large image and magnifying glass (e.g. thumbnail and high-resolution image)
+* Simple and customizable
+* Supports touch screens
+* Allows different files for large image and magnifying glass (e.g. thumbnail and high-resolution image)
 
 → **[Demo](https://samuelmeuli.github.io/react-magnifier)**
 
@@ -55,15 +55,15 @@ Prop | Type | Default | Description
 
 ```scss
 .magnifier {
-  // styles for <div> around image and magnifying glass
+  // Styles for <div> around image and magnifying glass
 }
 
 .magnifier-image {
-  // styles for large image
+  // Styles for large image
 }
 
 .magnifying-glass {
-  // styles for magnifying glass
+  // Styles for magnifying glass
 }
 ```
 
@@ -71,6 +71,6 @@ Prop | Type | Default | Description
 ## Development
 
 * `git clone`
-* `npm install`
-* `npm start` to generate the library bundle using [Rollup](https://github.com/rollup/rollup)
+* `yarn install`
+* `yarn start` to generate the library bundle using [Rollup](https://github.com/rollup/rollup)
 * Open `localhost:3000` to see the component in action using [Storybook](https://github.com/storybooks/storybook)
