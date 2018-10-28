@@ -20,6 +20,7 @@ const propTypes = {
 	// Magnifying glass
 	mgWidth: PropTypes.number,
 	mgHeight: PropTypes.number,
+	mgBorderWidth: PropTypes.number,
 	mgShape: PropTypes.oneOf(['circle', 'square']),
 	mgMouseOffsetX: PropTypes.number,
 	mgMouseOffsetY: PropTypes.number,
@@ -40,6 +41,7 @@ const defaultProps = {
 	// Magnifying glass
 	mgWidth: 150,
 	mgHeight: 150,
+	mgBorderWidth: 2,
 	mgShape: 'circle',
 	mgMouseOffsetX: 0,
 	mgMouseOffsetY: 0,
@@ -165,6 +167,7 @@ export default class Magnifier extends PureComponent {
 			zoomFactor,
 			mgHeight,
 			mgWidth,
+			mgBorderWidth,
 			mgShape,
 		} = this.props;
 		const { mgOffsetX, mgOffsetY, relX, relY, showZoom } = this.state;
@@ -207,11 +210,12 @@ export default class Magnifier extends PureComponent {
 								style={{
 									width: mgWidth,
 									height: mgHeight,
-									left: `calc(${relX * 100}% - ${mgWidth / 2}px + ${mgOffsetX}px)`,
-									top: `calc(${relY * 100}% - ${mgHeight / 2}px + ${mgOffsetY}px)`,
+									left: `calc(${relX * 100}% - ${mgWidth / 2}px + ${mgOffsetX}px - ${mgBorderWidth}px)`,
+									top: `calc(${relY * 100}% - ${mgHeight / 2}px + ${mgOffsetY}px - ${mgBorderWidth}px)`,
 									backgroundImage: `url(${zoomImgSrc || src})`,
 									backgroundPosition: `${relX * 100}% ${relY * 100}%`,
 									backgroundSize: `${zoomFactor * this.imgBounds.width}% ${zoomFactor * this.imgBounds.height}%`,
+									borderWidth: mgBorderWidth,
 								}}
 							/>
 						)

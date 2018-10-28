@@ -44,6 +44,7 @@ Prop | Type | Default | Description
 `zoomFactor` | Number | `1.5` | Factor by which the zoom image will be scaled (based on the size of the large image)
 `mgWidth` | Number | `150` | Width of the magnifying glass in px
 `mgHeight` | Number | `150` | Height of the magnifying glass in px
+`mgBorderWidth` | Number | `2` | Border width of the magnifying glass in px
 `mgShape` | String | `'circle'` | Shape of the magnifying glass (possible values: `'circle'`, `'square'`)
 `mgMouseOffsetX` | Number | `0` | Horizontal offset of the magnifying glass in px when hovering with a mouse
 `mgMouseOffsetY` | Number | `0` | Vertical offset of the magnifying glass in px when hovering with a mouse
