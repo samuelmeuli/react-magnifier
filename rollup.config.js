@@ -18,7 +18,7 @@ export default {
 			sourcemap: true
 		}
 	],
-	external: ['react', 'prop-types', 'lodash.throttle'],
+	external: ['react', 'prop-types', 'lodash.debounce', 'lodash.throttle'],
 	plugins: [
 		postcss(),
 		babel({

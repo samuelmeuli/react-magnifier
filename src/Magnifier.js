@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
+import debounce from 'lodash.debounce';
 import throttle from 'lodash.throttle';
 
 import './style.scss';
@@ -57,10 +58,6 @@ export default class Magnifier extends PureComponent {
 		this.state = {
 			showZoom: false,
 
-			// Absolute image size
-			absWidth: null,
-			absHeight: null,
-
 			// Magnifying glass offset
 			mgOffsetX: 0,
 			mgOffsetY: 0,
@@ -75,32 +72,36 @@ export default class Magnifier extends PureComponent {
 		this.onMouseOut = this.onMouseOut.bind(this);
 		this.onTouchMove = throttle(this.onTouchMove.bind(this), 20, { trailing: false });
 		this.onTouchEnd = this.onTouchEnd.bind(this);
+		this.calcImgBounds = this.calcImgBounds.bind(this);
+		this.calcImgBoundsDebounced = debounce(this.calcImgBounds, 200);
 	}
 
 	componentDidMount() {
-		// Add non-passive event listeners to 'nv' element (assigned in render function)
-		this.element.addEventListener('mousemove', this.onMouseMove, { passive: false });
-		this.element.addEventListener('mouseout', this.onMouseOut, { passive: false });
-		this.element.addEventListener('touchstart', this.onTouchStart, { passive: false });
-		this.element.addEventListener('touchmove', this.onTouchMove, { passive: false });
-		this.element.addEventListener('touchend', this.onTouchEnd, { passive: false });
+		// Add non-passive event listeners to image img (assigned in render function)
+		this.img.addEventListener('mousemove', this.onMouseMove, { passive: false });
+		this.img.addEventListener('mouseout', this.onMouseOut, { passive: false });
+		this.img.addEventListener('touchstart', this.onTouchStart, { passive: false });
+		this.img.addEventListener('touchmove', this.onTouchMove, { passive: false });
+		this.img.addEventListener('touchend', this.onTouchEnd, { passive: false });
+
+		// Calculate image bounds whenever window is resized
+		window.addEventListener('resize', this.calcImgBoundsDebounced);
 	}
 
 	componentWillUnmount() {
 		// Remove all event listeners
-		this.element.removeEventListener('mousemove', this.onMouseMove);
-		this.element.removeEventListener('mouseout', this.onMouseMove);
-		this.element.removeEventListener('touchstart', this.onMouseMove);
-		this.element.removeEventListener('touchmove', this.onMouseMove);
-		this.element.removeEventListener('touchend', this.onMouseMove);
+		this.img.removeEventListener('mousemove', this.onMouseMove);
+		this.img.removeEventListener('mouseout', this.onMouseMove);
+		this.img.removeEventListener('touchstart', this.onMouseMove);
+		this.img.removeEventListener('touchmove', this.onMouseMove);
+		this.img.removeEventListener('touchend', this.onMouseMove);
 	}
 
 	onMouseMove(e) {
-		const imgBounds = e.target.getBoundingClientRect();
 		this.setState({
 			showZoom: true,
-			relX: (e.clientX - imgBounds.left) / e.target.clientWidth,
-			relY: (e.clientY - imgBounds.top) / e.target.clientHeight,
+			relX: (e.clientX - this.imgBounds.left) / e.target.clientWidth,
+			relY: (e.clientY - this.imgBounds.top) / e.target.clientHeight,
 			mgOffsetX: this.props.mgMouseOffsetX,
 			mgOffsetY: this.props.mgMouseOffsetY
 		});
@@ -112,9 +113,8 @@ export default class Magnifier extends PureComponent {
 
 	onTouchMove(e) {
 		e.preventDefault(); // Disable scroll on touch
-		const imgBounds = e.target.getBoundingClientRect();
-		const relX = (e.targetTouches[0].clientX - imgBounds.left) / e.target.clientWidth;
-		const relY = (e.targetTouches[0].clientY - imgBounds.top) / e.target.clientHeight;
+		const relX = (e.targetTouches[0].clientX - this.imgBounds.left) / e.target.clientWidth;
+		const relY = (e.targetTouches[0].clientY - this.imgBounds.top) / e.target.clientHeight;
 
 		// Only show magnifying glass if touch is inside image
 		if (relX >= 0 && relY >= 0 && relX <= 1 && relY <= 1) {
@@ -144,13 +144,20 @@ export default class Magnifier extends PureComponent {
 		});
 	}
 
+	calcImgBounds() {
+		this.imgBounds = this.img.getBoundingClientRect();
+	}
+
 	render() {
+		const { src, alt, zoomImgSrc, zoomFactor, mgHeight, mgWidth, mgShape } = this.props;
+		const { mgOffsetX, mgOffsetY, relX, relY, showZoom } = this.state;
+
 		// Show/hide magnifying glass (opacity needed for transition)
 		let mgClasses = 'magnifying-glass';
-		if (this.state.showZoom) {
+		if (showZoom) {
 			mgClasses += ' visible';
 		}
-		if (this.props.mgShape === 'circle') {
+		if (mgShape === 'circle') {
 			mgClasses += ' circle';
 		}
 
@@ -164,32 +171,32 @@ export default class Magnifier extends PureComponent {
 			>
 				<img
 					className="magnifier-image"
-					src={this.props.src}
-					alt={this.props.alt}
+					src={src}
+					alt={alt}
 					width="100%"
 					height="100%"
-					onLoad={(e) => {
-						this.setState({
-							absWidth: e.target.width,
-							absHeight: e.target.height
-						});
+					onLoad={() => {
+						this.calcImgBounds();
 					}}
 					ref={(e) => {
-						this.element = e;
+						this.img = e;
 					}}
 				/>
-				<div
-					className={mgClasses}
-					style={{
-						width: this.props.mgWidth,
-						height: this.props.mgHeight,
-						left: `calc(${this.state.relX * 100}% - ${this.props.mgWidth / 2}px + ${this.state.mgOffsetX}px)`,
-						top: `calc(${this.state.relY * 100}% - ${this.props.mgHeight / 2}px + ${this.state.mgOffsetY}px)`,
-						backgroundImage: `url(${this.props.zoomImgSrc || this.props.src})`,
-						backgroundPosition: `${this.state.relX * 100}% ${this.state.relY * 100}%`,
-						backgroundSize: `${this.props.zoomFactor * this.state.absWidth}% ${this.props.zoomFactor * this.state.absHeight}%`
-					}}
-				/>
+				{
+					this.imgBounds &&
+						<div
+							className={mgClasses}
+							style={{
+								width: mgWidth,
+								height: mgHeight,
+								left: `calc(${relX * 100}% - ${mgWidth / 2}px + ${mgOffsetX}px)`,
+								top: `calc(${relY * 100}% - ${mgHeight / 2}px + ${mgOffsetY}px)`,
+								backgroundImage: `url(${zoomImgSrc || src})`,
+								backgroundPosition: `${relX * 100}% ${relY * 100}%`,
+								backgroundSize: `${zoomFactor * this.imgBounds.width}% ${zoomFactor * this.imgBounds.height}%`
+							}}
+						/>
+				}
 			</div>
 		);
 	}
