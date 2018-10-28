@@ -1,3 +1,5 @@
+/* eslint import/no-extraneous-dependencies: 0 */
+
 import React from 'react';
 import { storiesOf, addDecorator } from '@storybook/react';
 
@@ -11,7 +13,7 @@ addDecorator(story => (
 		style={{
 			display: 'flex',
 			justifyContent: 'center',
-			marginTop: 100
+			marginTop: 100,
 		}}
 	>
 		{story()}

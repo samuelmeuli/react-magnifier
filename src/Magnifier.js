@@ -24,7 +24,7 @@ const propTypes = {
 	mgMouseOffsetX: PropTypes.number,
 	mgMouseOffsetY: PropTypes.number,
 	mgTouchOffsetX: PropTypes.number,
-	mgTouchOffsetY: PropTypes.number
+	mgTouchOffsetY: PropTypes.number,
 };
 
 const defaultProps = {
@@ -44,14 +44,14 @@ const defaultProps = {
 	mgMouseOffsetX: 0,
 	mgMouseOffsetY: 0,
 	mgTouchOffsetX: -50,
-	mgTouchOffsetY: -50
+	mgTouchOffsetY: -50,
 };
 
 export default class Magnifier extends PureComponent {
 	constructor(props) {
 		super(props);
 
-		if (!this.props.src) {
+		if (!props.src) {
 			throw Error('Missing src prop');
 		}
 
@@ -64,7 +64,7 @@ export default class Magnifier extends PureComponent {
 
 			// Mouse position relative to image
 			relX: 0,
-			relY: 0
+			relY: 0,
 		};
 
 		// Function bindings
@@ -98,21 +98,24 @@ export default class Magnifier extends PureComponent {
 	}
 
 	onMouseMove(e) {
+		const { mgMouseOffsetX, mgMouseOffsetY } = this.props;
+
 		this.setState({
 			showZoom: true,
 			relX: (e.clientX - this.imgBounds.left) / e.target.clientWidth,
 			relY: (e.clientY - this.imgBounds.top) / e.target.clientHeight,
-			mgOffsetX: this.props.mgMouseOffsetX,
-			mgOffsetY: this.props.mgMouseOffsetY
+			mgOffsetX: mgMouseOffsetX,
+			mgOffsetY: mgMouseOffsetY,
 		});
 	}
 
-	onTouchStart(e) {
+	onTouchStart(e) { // eslint-disable-line class-methods-use-this
 		e.preventDefault(); // Prevent mouse event from being fired
 	}
 
 	onTouchMove(e) {
 		e.preventDefault(); // Disable scroll on touch
+		const { mgTouchOffsetX, mgTouchOffsetY } = this.props;
 		const relX = (e.targetTouches[0].clientX - this.imgBounds.left) / e.target.clientWidth;
 		const relY = (e.targetTouches[0].clientY - this.imgBounds.top) / e.target.clientHeight;
 
@@ -122,25 +125,25 @@ export default class Magnifier extends PureComponent {
 				showZoom: true,
 				relX,
 				relY,
-				mgOffsetX: this.props.mgTouchOffsetX,
-				mgOffsetY: this.props.mgTouchOffsetY
+				mgOffsetX: mgTouchOffsetX,
+				mgOffsetY: mgTouchOffsetY,
 			});
 		} else {
 			this.setState({
-				showZoom: false
+				showZoom: false,
 			});
 		}
 	}
 
 	onMouseOut() {
 		this.setState({
-			showZoom: false
+			showZoom: false,
 		});
 	}
 
 	onTouchEnd() {
 		this.setState({
-			showZoom: false
+			showZoom: false,
 		});
 	}
 
@@ -149,7 +152,16 @@ export default class Magnifier extends PureComponent {
 	}
 
 	render() {
-		const { src, alt, zoomImgSrc, zoomFactor, mgHeight, mgWidth, mgShape } = this.props;
+		const { src,
+			alt,
+			width,
+			height,
+			zoomImgSrc,
+			zoomFactor,
+			mgHeight,
+			mgWidth,
+			mgShape,
+		} = this.props;
 		const { mgOffsetX, mgOffsetY, relX, relY, showZoom } = this.state;
 
 		// Show/hide magnifying glass (opacity needed for transition)
@@ -165,8 +177,8 @@ export default class Magnifier extends PureComponent {
 			<div
 				className="magnifier"
 				style={{
-					width: this.props.width,
-					height: this.props.height
+					width,
+					height,
 				}}
 			>
 				<img
@@ -183,19 +195,21 @@ export default class Magnifier extends PureComponent {
 					}}
 				/>
 				{
-					this.imgBounds &&
-						<div
-							className={mgClasses}
-							style={{
-								width: mgWidth,
-								height: mgHeight,
-								left: `calc(${relX * 100}% - ${mgWidth / 2}px + ${mgOffsetX}px)`,
-								top: `calc(${relY * 100}% - ${mgHeight / 2}px + ${mgOffsetY}px)`,
-								backgroundImage: `url(${zoomImgSrc || src})`,
-								backgroundPosition: `${relX * 100}% ${relY * 100}%`,
-								backgroundSize: `${zoomFactor * this.imgBounds.width}% ${zoomFactor * this.imgBounds.height}%`
-							}}
-						/>
+					this.imgBounds
+						&& (
+							<div
+								className={mgClasses}
+								style={{
+									width: mgWidth,
+									height: mgHeight,
+									left: `calc(${relX * 100}% - ${mgWidth / 2}px + ${mgOffsetX}px)`,
+									top: `calc(${relY * 100}% - ${mgHeight / 2}px + ${mgOffsetY}px)`,
+									backgroundImage: `url(${zoomImgSrc || src})`,
+									backgroundPosition: `${relX * 100}% ${relY * 100}%`,
+									backgroundSize: `${zoomFactor * this.imgBounds.width}% ${zoomFactor * this.imgBounds.height}%`,
+								}}
+							/>
+						)
 				}
 			</div>
 		);

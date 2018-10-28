@@ -10,20 +10,20 @@ export default {
 		{
 			file: pkg.main,
 			format: 'cjs',
-			sourcemap: true
+			sourcemap: true,
 		},
 		{
 			file: pkg.module,
 			format: 'es',
-			sourcemap: true
-		}
+			sourcemap: true,
+		},
 	],
 	external: ['react', 'prop-types', 'lodash.debounce', 'lodash.throttle'],
 	plugins: [
 		postcss(),
 		babel({
 			exclude: 'node_modules/**',
-			externalHelpers: true
-		})
-	]
+			externalHelpers: true,
+		}),
+	],
 };

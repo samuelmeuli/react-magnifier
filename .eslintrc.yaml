@@ -12,9 +12,6 @@ rules:
     - 2
     - always
     - ignoreConsecutiveComments: true
-  comma-dangle:
-    - 2
-    - never
   indent:
     - 2
     - tab
@@ -39,7 +36,3 @@ rules:
     - 2
     - tab
   react/jsx-one-expression-per-line: 0
-
-  # Project-specific rules
-  class-methods-use-this: 0
-  import/no-extraneous-dependencies: 0
