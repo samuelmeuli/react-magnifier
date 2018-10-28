@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import throttle from 'lodash.throttle';
 
@@ -46,7 +46,7 @@ const defaultProps = {
 	mgTouchOffsetY: -50
 };
 
-export default class Magnifier extends Component {
+export default class Magnifier extends PureComponent {
 	constructor(props) {
 		super(props);
 
