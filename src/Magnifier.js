@@ -100,13 +100,15 @@ export default class Magnifier extends PureComponent {
 	onMouseMove(e) {
 		const { mgMouseOffsetX, mgMouseOffsetY } = this.props;
 
-		this.setState({
-			showZoom: true,
-			relX: (e.clientX - this.imgBounds.left) / e.target.clientWidth,
-			relY: (e.clientY - this.imgBounds.top) / e.target.clientHeight,
-			mgOffsetX: mgMouseOffsetX,
-			mgOffsetY: mgMouseOffsetY,
-		});
+		if (this.imgBounds) {
+			this.setState({
+				showZoom: true,
+				relX: (e.clientX - this.imgBounds.left) / e.target.clientWidth,
+				relY: (e.clientY - this.imgBounds.top) / e.target.clientHeight,
+				mgOffsetX: mgMouseOffsetX,
+				mgOffsetY: mgMouseOffsetY,
+			});
+		}
 	}
 
 	onTouchStart(e) { // eslint-disable-line class-methods-use-this
@@ -115,23 +117,26 @@ export default class Magnifier extends PureComponent {
 
 	onTouchMove(e) {
 		e.preventDefault(); // Disable scroll on touch
-		const { mgTouchOffsetX, mgTouchOffsetY } = this.props;
-		const relX = (e.targetTouches[0].clientX - this.imgBounds.left) / e.target.clientWidth;
-		const relY = (e.targetTouches[0].clientY - this.imgBounds.top) / e.target.clientHeight;
 
-		// Only show magnifying glass if touch is inside image
-		if (relX >= 0 && relY >= 0 && relX <= 1 && relY <= 1) {
-			this.setState({
-				showZoom: true,
-				relX,
-				relY,
-				mgOffsetX: mgTouchOffsetX,
-				mgOffsetY: mgTouchOffsetY,
-			});
-		} else {
-			this.setState({
-				showZoom: false,
-			});
+		if (this.imgBounds) {
+			const { mgTouchOffsetX, mgTouchOffsetY } = this.props;
+			const relX = (e.targetTouches[0].clientX - this.imgBounds.left) / e.target.clientWidth;
+			const relY = (e.targetTouches[0].clientY - this.imgBounds.top) / e.target.clientHeight;
+
+			// Only show magnifying glass if touch is inside image
+			if (relX >= 0 && relY >= 0 && relX <= 1 && relY <= 1) {
+				this.setState({
+					showZoom: true,
+					relX,
+					relY,
+					mgOffsetX: mgTouchOffsetX,
+					mgOffsetY: mgTouchOffsetY,
+				});
+			} else {
+				this.setState({
+					showZoom: false,
+				});
+			}
 		}
 	}
 
