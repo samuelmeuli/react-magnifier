@@ -52,19 +52,19 @@ const defaultProps = {
 };
 
 export default class Magnifier extends PureComponent {
-	static roundRel(number) {
+	static enforceRelative(number) {
+		// Make sure the provided relative number lies between 0 and 1
 		if (number < 0) {
 			return 0;
 		}
 		if (number > 1) {
 			return 1;
 		}
-		return Math.round(number * 10000) / 10000;
+		return number;
 	}
 
 	constructor(props) {
 		super(props);
-
 		if (!props.src) {
 			throw Error('Missing src prop');
 		}
@@ -121,8 +121,8 @@ export default class Magnifier extends PureComponent {
 
 			this.setState({
 				showZoom: true,
-				relX: Magnifier.roundRel(relX),
-				relY: Magnifier.roundRel(relY),
+				relX: Magnifier.enforceRelative(relX),
+				relY: Magnifier.enforceRelative(relY),
 				mgOffsetX: mgMouseOffsetX,
 				mgOffsetY: mgMouseOffsetY,
 			});
@@ -145,8 +145,8 @@ export default class Magnifier extends PureComponent {
 			if (relX >= 0 && relY >= 0 && relX <= 1 && relY <= 1) {
 				this.setState({
 					showZoom: true,
-					relX: Magnifier.roundRel(relX),
-					relY: Magnifier.roundRel(relY),
+					relX: Magnifier.enforceRelative(relX),
+					relY: Magnifier.enforceRelative(relY),
 					mgOffsetX: mgTouchOffsetX,
 					mgOffsetY: mgTouchOffsetY,
 				});
