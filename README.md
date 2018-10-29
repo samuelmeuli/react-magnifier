@@ -71,7 +71,10 @@ Prop | Type | Default | Description
 
 ## Development
 
-* `git clone`
-* `yarn install`
-* `yarn start` to generate the library bundle using [Rollup](https://github.com/rollup/rollup)
-* Open `localhost:3000` to see the component in action using [Storybook](https://github.com/storybooks/storybook)
+Requirements: Node.js, Yarn
+
+1. Clone this repository: `git clone [repo-url]`
+2. Install all dependencies: `yarn install`
+3. Run `yarn start` to generate the library bundle using [Rollup](https://github.com/rollup/rollup) and see the component in action using [Storybook](https://github.com/storybooks/storybook)
+
+Suggestions and contributions are always welcome! Please first discuss changes via issue before submitting a pull request.
