@@ -46,6 +46,7 @@ Prop | Type | Default | Description
 `mgHeight` | Number | `150` | Height of the magnifying glass in px
 `mgBorderWidth` | Number | `2` | Border width of the magnifying glass in px
 `mgShape` | String | `'circle'` | Shape of the magnifying glass (possible values: `'circle'`, `'square'`)
+`mgShowOverflow` | Boolean | `false` | Set this to `true` to show the full magnifying glass when hovering close to the image border
 `mgMouseOffsetX` | Number | `0` | Horizontal offset of the magnifying glass in px when hovering with a mouse
 `mgMouseOffsetY` | Number | `0` | Vertical offset of the magnifying glass in px when hovering with a mouse
 `mgTouchOffsetX` | Number | `-50` | Horizontal offset of the magnifying glass in px when dragging on a touch screen

@@ -7,6 +7,8 @@ import Magnifier from '../lib/Magnifier.es';
 import testImage from './test-image.jpg';
 import testImageSmall from './test-image-small.jpg';
 
+const IMG_WIDTH = '50%';
+
 
 addDecorator(story => (
 	<div
@@ -24,20 +26,27 @@ storiesOf('Magnifier', module)
 	.add('Round', () => (
 		<Magnifier
 			src={testImage}
-			width="50%"
+			width={IMG_WIDTH}
 		/>
 	))
 	.add('Square', () => (
 		<Magnifier
 			src={testImage}
 			mgShape="square"
-			width="50%"
+			width={IMG_WIDTH}
+		/>
+	))
+	.add('Show overflow', () => (
+		<Magnifier
+			src={testImage}
+			mgShowOverflow
+			width={IMG_WIDTH}
 		/>
 	))
 	.add('Different images', () => (
 		<Magnifier
 			src={testImageSmall}
 			zoomImgSrc={testImage}
-			width="50%"
+			width={IMG_WIDTH}
 		/>
 	));

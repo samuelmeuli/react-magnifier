@@ -22,6 +22,7 @@ const propTypes = {
 	mgHeight: PropTypes.number,
 	mgBorderWidth: PropTypes.number,
 	mgShape: PropTypes.oneOf(['circle', 'square']),
+	mgShowOverflow: PropTypes.bool,
 	mgMouseOffsetX: PropTypes.number,
 	mgMouseOffsetY: PropTypes.number,
 	mgTouchOffsetX: PropTypes.number,
@@ -43,6 +44,7 @@ const defaultProps = {
 	mgHeight: 150,
 	mgBorderWidth: 2,
 	mgShape: 'circle',
+	mgShowOverflow: false,
 	mgMouseOffsetX: 0,
 	mgMouseOffsetY: 0,
 	mgTouchOffsetX: -50,
@@ -50,6 +52,16 @@ const defaultProps = {
 };
 
 export default class Magnifier extends PureComponent {
+	static roundRel(number) {
+		if (number < 0) {
+			return 0;
+		}
+		if (number > 1) {
+			return 1;
+		}
+		return Math.round(number * 10000) / 10000;
+	}
+
 	constructor(props) {
 		super(props);
 
@@ -104,10 +116,13 @@ export default class Magnifier extends PureComponent {
 		const { mgMouseOffsetX, mgMouseOffsetY } = this.props;
 
 		if (this.imgBounds) {
+			const relX = (e.clientX - this.imgBounds.left) / e.target.clientWidth;
+			const relY = (e.clientY - this.imgBounds.top) / e.target.clientHeight;
+
 			this.setState({
 				showZoom: true,
-				relX: (e.clientX - this.imgBounds.left) / e.target.clientWidth,
-				relY: (e.clientY - this.imgBounds.top) / e.target.clientHeight,
+				relX: Magnifier.roundRel(relX),
+				relY: Magnifier.roundRel(relY),
 				mgOffsetX: mgMouseOffsetX,
 				mgOffsetY: mgMouseOffsetY,
 			});
@@ -130,8 +145,8 @@ export default class Magnifier extends PureComponent {
 			if (relX >= 0 && relY >= 0 && relX <= 1 && relY <= 1) {
 				this.setState({
 					showZoom: true,
-					relX,
-					relY,
+					relX: Magnifier.roundRel(relX),
+					relY: Magnifier.roundRel(relY),
 					mgOffsetX: mgTouchOffsetX,
 					mgOffsetY: mgTouchOffsetY,
 				});
@@ -160,7 +175,8 @@ export default class Magnifier extends PureComponent {
 	}
 
 	render() {
-		const { src,
+		const {
+			src,
 			alt,
 			width,
 			height,
@@ -170,6 +186,7 @@ export default class Magnifier extends PureComponent {
 			mgWidth,
 			mgBorderWidth,
 			mgShape,
+			mgShowOverflow,
 		} = this.props;
 		const { mgOffsetX, mgOffsetY, relX, relY, showZoom } = this.state;
 
@@ -188,6 +205,7 @@ export default class Magnifier extends PureComponent {
 				style={{
 					width,
 					height,
+					overflow: mgShowOverflow ? 'visible' : 'hidden',
 				}}
 			>
 				<img
@@ -214,7 +232,7 @@ export default class Magnifier extends PureComponent {
 									left: `calc(${relX * 100}% - ${mgWidth / 2}px + ${mgOffsetX}px - ${mgBorderWidth}px)`,
 									top: `calc(${relY * 100}% - ${mgHeight / 2}px + ${mgOffsetY}px - ${mgBorderWidth}px)`,
 									backgroundImage: `url(${zoomImgSrc || src})`,
-									backgroundPosition: `${relX * 100}% ${relY * 100}%`,
+									backgroundPosition: `calc(${relX * 100}% + ${mgWidth / 2}px - ${relX * mgWidth}px) calc(${relY * 100}% + ${mgHeight / 2}px - ${relY * mgWidth}px)`,
 									backgroundSize: `${zoomFactor * this.imgBounds.width}% ${zoomFactor * this.imgBounds.height}%`,
 									borderWidth: mgBorderWidth,
 								}}

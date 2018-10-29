@@ -1,6 +1,7 @@
 .magnifier {
 	position: relative;
 	display: inline-block;
+	line-height: 0;
 }
 
 .magnifier-image {
@@ -11,7 +12,7 @@
 	position: absolute;
 	z-index: 1;
 	transition: opacity 0.3s;
-	background-repeat: no-repeat;
+	background: rgba(0, 0, 0, 0.1) no-repeat;
 	border: solid #EBEBEB;
 	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
 	pointer-events: none;
