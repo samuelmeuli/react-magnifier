@@ -44,7 +44,7 @@ const defaultProps = {
 	mgHeight: 150,
 	mgBorderWidth: 2,
 	mgShape: 'circle',
-	mgShowOverflow: false,
+	mgShowOverflow: true,
 	mgMouseOffsetX: 0,
 	mgMouseOffsetY: 0,
 	mgTouchOffsetX: -50,

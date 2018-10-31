@@ -12,17 +12,17 @@
 	position: absolute;
 	z-index: 1;
 	transition: opacity 0.3s;
-	background: rgba(0, 0, 0, 0.1) no-repeat;
+	background: #E5E5E5 no-repeat; // Use opaque background to hide main image when using an offset
 	border: solid #EBEBEB;
 	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
 	pointer-events: none;
-	opacity: 0; // needed for transition
+	opacity: 0; // Needed for transition
 
 	&.circle {
 		border-radius: 50%;
 	}
 
 	&.visible {
-		opacity: 1; // needed for transition
+		opacity: 1; // Needed for transition
 	}
 }

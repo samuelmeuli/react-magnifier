@@ -36,10 +36,12 @@ storiesOf('Magnifier', module)
 			width={IMG_WIDTH}
 		/>
 	))
-	.add('Show overflow', () => (
+	.add('Hide overflow', () => (
 		<Magnifier
 			src={testImage}
-			mgShowOverflow
+			mgShowOverflow={false}
+			mgTouchOffsetX={0}
+			mgTouchOffsetY={0}
 			width={IMG_WIDTH}
 		/>
 	))
