@@ -98,8 +98,9 @@ export default class Magnifier extends PureComponent {
 		this.img.addEventListener('touchmove', this.onTouchMove, { passive: false });
 		this.img.addEventListener('touchend', this.onTouchEnd, { passive: false });
 
-		// Calculate image bounds whenever window is resized
+		// Re-calculate image bounds on resize and scroll
 		window.addEventListener('resize', this.calcImgBoundsDebounced);
+		window.addEventListener('scroll', this.calcImgBoundsDebounced);
 	}
 
 	componentWillUnmount() {
@@ -110,6 +111,7 @@ export default class Magnifier extends PureComponent {
 		this.img.removeEventListener('touchmove', this.onMouseMove);
 		this.img.removeEventListener('touchend', this.onMouseMove);
 		window.removeEventListener('resize', this.calcImgBoundsDebounced);
+		window.removeEventListener('scroll', this.calcImgBoundsDebounced);
 	}
 
 	onMouseMove(e) {
