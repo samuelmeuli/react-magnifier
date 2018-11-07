@@ -15,7 +15,7 @@ addDecorator(story => (
 		style={{
 			display: 'flex',
 			justifyContent: 'center',
-			marginTop: 100,
+			margin: '100px 0',
 		}}
 	>
 		{story()}
