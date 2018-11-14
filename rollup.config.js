@@ -23,7 +23,6 @@ export default {
 		postcss(),
 		babel({
 			exclude: 'node_modules/**',
-			externalHelpers: true,
 		}),
 	],
 };
