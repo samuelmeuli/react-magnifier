@@ -39,6 +39,7 @@ Prop | Type | Default | Description
 `src` (required) | String | – | URL/path of the large image
 `height` | Number/String | `'auto'` | Image height (absolute or relative values possible)
 `width` | Number/String | `'100%'` | Image width (absolute or relative values possible)
+`className` | String | `''` | Class which will be applied to the image wrapper
 `zoomImgSrc` | String | – | URL/path of the image inside the magnifying glass (if not specified, the large image will be used)
 `zoomFactor` | Number | `1.5` | Factor by which the zoom image will be scaled (based on the size of the large image)
 `mgWidth` | Number | `150` | Width of the magnifying glass in px

@@ -11,6 +11,7 @@ const propTypes = {
 	src: PropTypes.string.isRequired,
 	width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+	className: PropTypes.string,
 
 	// Zoom image
 	zoomImgSrc: PropTypes.string,
@@ -32,6 +33,7 @@ const defaultProps = {
 	// Image
 	width: '100%',
 	height: 'auto',
+	className: '',
 
 	// Zoom image
 	zoomImgSrc: null,
@@ -179,6 +181,7 @@ export default class Magnifier extends PureComponent {
 			src,
 			width,
 			height,
+			className,
 			zoomImgSrc,
 			zoomFactor,
 			mgHeight,
@@ -205,7 +208,7 @@ export default class Magnifier extends PureComponent {
 
 		return (
 			<div
-				className="magnifier"
+				className={`magnifier ${className}`}
 				style={{
 					width,
 					height,
