@@ -9,7 +9,6 @@ import './style.scss';
 const propTypes = {
 	// Image
 	src: PropTypes.string.isRequired,
-	alt: PropTypes.string,
 	width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 
@@ -31,7 +30,6 @@ const propTypes = {
 
 const defaultProps = {
 	// Image
-	alt: null,
 	width: '100%',
 	height: 'auto',
 
@@ -179,7 +177,6 @@ export default class Magnifier extends PureComponent {
 	render() {
 		const {
 			src,
-			alt,
 			width,
 			height,
 			zoomImgSrc,
@@ -187,8 +184,13 @@ export default class Magnifier extends PureComponent {
 			mgHeight,
 			mgWidth,
 			mgBorderWidth,
+			mgMouseOffsetX,
+			mgMouseOffsetY,
+			mgTouchOffsetX,
+			mgTouchOffsetY,
 			mgShape,
 			mgShowOverflow,
+			...otherProps
 		} = this.props;
 		const { mgOffsetX, mgOffsetY, relX, relY, showZoom } = this.state;
 
@@ -210,12 +212,12 @@ export default class Magnifier extends PureComponent {
 					overflow: mgShowOverflow ? 'visible' : 'hidden',
 				}}
 			>
-				<img
+				<img // eslint-disable-line jsx-a11y/alt-text
 					className="magnifier-image"
 					src={src}
-					alt={alt}
 					width="100%"
 					height="100%"
+					{...otherProps}
 					onLoad={() => {
 						this.calcImgBounds();
 					}}

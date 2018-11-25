@@ -37,7 +37,6 @@ import yourImage from './path/to/image';
 Prop | Type | Default | Description
 ---- | ---- | ------- | -----------
 `src` (required) | String | – | URL/path of the large image
-`alt` | String | – | Alternate text for the large image
 `height` | Number/String | `'auto'` | Image height (absolute or relative values possible)
 `width` | Number/String | `'100%'` | Image width (absolute or relative values possible)
 `zoomImgSrc` | String | – | URL/path of the image inside the magnifying glass (if not specified, the large image will be used)
@@ -51,6 +50,8 @@ Prop | Type | Default | Description
 `mgMouseOffsetY` | Number | `0` | Vertical offset of the magnifying glass in px when hovering with a mouse
 `mgTouchOffsetX` | Number | `-50` | Horizontal offset of the magnifying glass in px when dragging on a touch screen
 `mgTouchOffsetY` | Number | `-50` | Vertical offset of the magnifying glass in px when dragging on a touch screen
+
+Any other props will be passed down to the `<img>` element.
 
 When disabling `mgShowOverflow`, it's recommended that you also set all offsets to `0`.
 
