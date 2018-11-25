@@ -1,6 +1,6 @@
 # react-magnifier
 
-**React component for zooming in on images**
+**React image zoom component**
 
 * Simple and customizable
 * Supports touch screens

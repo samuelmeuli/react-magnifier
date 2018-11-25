@@ -1,18 +1,19 @@
 {
 	"name": "react-magnifier",
 	"version": "2.0.1",
-	"description": "React component for zooming in on images",
+	"description": "React image zoom component",
 	"keywords": [
 		"react",
 		"component",
 		"image",
 		"zoom",
 		"magnify",
+		"magnifier",
 		"magnifying glass"
 	],
 	"main": "lib/Magnifier.js",
 	"module": "lib/Magnifier.es.js",
-	"author": "Samuel Meuli <dev@samuelmeuli.com>",
+	"author": "Samuel Meuli <me@samuelmeuli.com>",
 	"repository": "github:samuelmeuli/react-magnifier",
 	"homepage": "https://samuelmeuli.github.io/react-magnifier",
 	"license": "MIT",
