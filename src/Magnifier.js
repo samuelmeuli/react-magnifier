@@ -91,7 +91,8 @@ export default class Magnifier extends PureComponent {
 	}
 
 	componentDidMount() {
-		// Add non-passive event listeners to image img (assigned in render function)
+		// Add mouse/touch event listeners to image element (assigned in render function)
+		// `passive: false` prevents scrolling on touch move
 		this.img.addEventListener('mousemove', this.onMouseMove, { passive: false });
 		this.img.addEventListener('mouseout', this.onMouseOut, { passive: false });
 		this.img.addEventListener('touchstart', this.onTouchStart, { passive: false });
