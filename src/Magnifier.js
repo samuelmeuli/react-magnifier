@@ -113,7 +113,7 @@ export default class Magnifier extends PureComponent {
 		this.img.removeEventListener('touchmove', this.onMouseMove);
 		this.img.removeEventListener('touchend', this.onMouseMove);
 		window.removeEventListener('resize', this.calcImgBoundsDebounced);
-		window.removeEventListener('scroll', this.calcImgBoundsDebounced);
+		window.removeEventListener('scroll', this.calcImgBoundsDebounced, true);
 	}
 
 	onMouseMove(e) {
