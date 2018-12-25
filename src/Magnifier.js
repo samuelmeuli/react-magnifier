@@ -82,6 +82,7 @@ export default class Magnifier extends PureComponent {
 		};
 
 		// Function bindings
+		this.onMouseEnter = this.onMouseEnter.bind(this);
 		this.onMouseMove = throttle(this.onMouseMove.bind(this), 20, { trailing: false });
 		this.onMouseOut = this.onMouseOut.bind(this);
 		this.onTouchMove = throttle(this.onTouchMove.bind(this), 20, { trailing: false });
@@ -93,6 +94,7 @@ export default class Magnifier extends PureComponent {
 	componentDidMount() {
 		// Add mouse/touch event listeners to image element (assigned in render function)
 		// `passive: false` prevents scrolling on touch move
+		this.img.addEventListener('mouseenter', this.onMouseEnter, { passive: false });
 		this.img.addEventListener('mousemove', this.onMouseMove, { passive: false });
 		this.img.addEventListener('mouseout', this.onMouseOut, { passive: false });
 		this.img.addEventListener('touchstart', this.onTouchStart, { passive: false });
@@ -107,6 +109,7 @@ export default class Magnifier extends PureComponent {
 
 	componentWillUnmount() {
 		// Remove all event listeners
+		this.img.removeEventListener('mouseenter', this.onMouseMove);
 		this.img.removeEventListener('mousemove', this.onMouseMove);
 		this.img.removeEventListener('mouseout', this.onMouseMove);
 		this.img.removeEventListener('touchstart', this.onMouseMove);
@@ -114,6 +117,10 @@ export default class Magnifier extends PureComponent {
 		this.img.removeEventListener('touchend', this.onMouseMove);
 		window.removeEventListener('resize', this.calcImgBoundsDebounced);
 		window.removeEventListener('scroll', this.calcImgBoundsDebounced, true);
+	}
+
+	onMouseEnter() {
+		this.calcImgBounds();
 	}
 
 	onMouseMove(e) {
@@ -135,6 +142,8 @@ export default class Magnifier extends PureComponent {
 
 	onTouchStart(e) { // eslint-disable-line class-methods-use-this
 		e.preventDefault(); // Prevent mouse event from being fired
+
+		this.calcImgBounds();
 	}
 
 	onTouchMove(e) {
@@ -175,7 +184,9 @@ export default class Magnifier extends PureComponent {
 	}
 
 	calcImgBounds() {
-		this.imgBounds = this.img.getBoundingClientRect();
+		if (this.img) {
+			this.imgBounds = this.img.getBoundingClientRect();
+		}
 	}
 
 	render() {
