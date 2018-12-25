@@ -52,7 +52,7 @@
 		"postcss": "^7.0.5",
 		"react": "^16.4.1",
 		"react-dom": "^16.4.1",
-		"rollup": "^0.67.0",
+		"rollup": "^0.68.2",
 		"rollup-plugin-babel": "^4.0.3",
 		"rollup-plugin-postcss": "^1.6.2"
 	},
