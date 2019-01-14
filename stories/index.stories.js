@@ -1,42 +1,30 @@
 /* eslint import/no-extraneous-dependencies: 0 */
 
-import React from 'react';
-import { storiesOf, addDecorator } from '@storybook/react';
+import React from "react";
+import { storiesOf, addDecorator } from "@storybook/react";
 
-import Magnifier from '../lib/Magnifier.es';
-import testImage from './test-image.jpg';
-import testImageSmall from './test-image-small.jpg';
+import Magnifier from "../lib/Magnifier.es";
+import testImage from "./test-image.jpg";
+import testImageSmall from "./test-image-small.jpg";
 
-const IMG_WIDTH = '50%';
-
+const IMG_WIDTH = "50%";
 
 addDecorator(story => (
 	<div
 		style={{
-			display: 'flex',
-			justifyContent: 'center',
-			margin: '100px 0',
+			display: "flex",
+			justifyContent: "center",
+			margin: "100px 0",
 		}}
 	>
 		{story()}
 	</div>
 ));
 
-storiesOf('Magnifier', module)
-	.add('Round', () => (
-		<Magnifier
-			src={testImage}
-			width={IMG_WIDTH}
-		/>
-	))
-	.add('Square', () => (
-		<Magnifier
-			src={testImage}
-			mgShape="square"
-			width={IMG_WIDTH}
-		/>
-	))
-	.add('Hide overflow', () => (
+storiesOf("Magnifier", module)
+	.add("Round", () => <Magnifier src={testImage} width={IMG_WIDTH} />)
+	.add("Square", () => <Magnifier src={testImage} mgShape="square" width={IMG_WIDTH} />)
+	.add("Hide overflow", () => (
 		<Magnifier
 			src={testImage}
 			mgShowOverflow={false}
@@ -45,10 +33,6 @@ storiesOf('Magnifier', module)
 			width={IMG_WIDTH}
 		/>
 	))
-	.add('Different images', () => (
-		<Magnifier
-			src={testImageSmall}
-			zoomImgSrc={testImage}
-			width={IMG_WIDTH}
-		/>
+	.add("Different images", () => (
+		<Magnifier src={testImageSmall} zoomImgSrc={testImage} width={IMG_WIDTH} />
 	));

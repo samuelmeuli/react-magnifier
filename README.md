@@ -2,16 +2,15 @@
 
 **React image zoom component**
 
-* Simple and customizable
-* Supports touch screens
-* Allows different files for large image and magnifying glass (e.g. thumbnail and high-resolution image)
+- Simple and customizable
+- Supports touch screens
+- Allows different files for large image and magnifying glass (e.g. thumbnail and high-resolution image)
 
 → **[Demo](https://samuelmeuli.github.io/react-magnifier)**
 
 <p align="center">
   <img src=".github/demo.gif" width=600 alt="Demo">
 </p>
-
 
 ## Usage
 
@@ -24,38 +23,37 @@ npm install react-magnifier
 Add the component to your React application:
 
 ```jsx
-import Magnifier from 'react-magnifier';
-import yourImage from './path/to/image';
+import Magnifier from "react-magnifier";
+import yourImage from "./path/to/image";
 
-// Somewhere in your code:
-<Magnifier src={yourImage} width={500} />
+export default function ExampleComponent() {
+  return <Magnifier src={logo} width={500} />;
+}
 ```
-
 
 ## Configuration
 
-Prop | Type | Default | Description
----- | ---- | ------- | -----------
-`src` (required) | String | – | URL/path of the large image
-`height` | Number/String | `'auto'` | Image height (absolute or relative values possible)
-`width` | Number/String | `'100%'` | Image width (absolute or relative values possible)
-`className` | String | `''` | Class which will be applied to the image wrapper
-`zoomImgSrc` | String | – | URL/path of the image inside the magnifying glass (if not specified, the large image will be used)
-`zoomFactor` | Number | `1.5` | Factor by which the zoom image will be scaled (based on the size of the large image)
-`mgWidth` | Number | `150` | Width of the magnifying glass in px
-`mgHeight` | Number | `150` | Height of the magnifying glass in px
-`mgBorderWidth` | Number | `2` | Border width of the magnifying glass in px
-`mgShape` | String | `'circle'` | Shape of the magnifying glass (possible values: `'circle'`, `'square'`)
-`mgShowOverflow` | Boolean | `true` | Set this to `false` to cut off the magnifying glass at the image borders
-`mgMouseOffsetX` | Number | `0` | Horizontal offset of the magnifying glass in px when hovering with a mouse
-`mgMouseOffsetY` | Number | `0` | Vertical offset of the magnifying glass in px when hovering with a mouse
-`mgTouchOffsetX` | Number | `-50` | Horizontal offset of the magnifying glass in px when dragging on a touch screen
-`mgTouchOffsetY` | Number | `-50` | Vertical offset of the magnifying glass in px when dragging on a touch screen
+| Prop             | Type          | Default    | Description                                                                                        |
+| ---------------- | ------------- | ---------- | -------------------------------------------------------------------------------------------------- |
+| `src` (required) | String        | –          | URL/path of the large image                                                                        |
+| `height`         | Number/String | `'auto'`   | Image height (absolute or relative values possible)                                                |
+| `width`          | Number/String | `'100%'`   | Image width (absolute or relative values possible)                                                 |
+| `className`      | String        | `''`       | Class which will be applied to the image wrapper                                                   |
+| `zoomImgSrc`     | String        | –          | URL/path of the image inside the magnifying glass (if not specified, the large image will be used) |
+| `zoomFactor`     | Number        | `1.5`      | Factor by which the zoom image will be scaled (based on the size of the large image)               |
+| `mgWidth`        | Number        | `150`      | Width of the magnifying glass in px                                                                |
+| `mgHeight`       | Number        | `150`      | Height of the magnifying glass in px                                                               |
+| `mgBorderWidth`  | Number        | `2`        | Border width of the magnifying glass in px                                                         |
+| `mgShape`        | String        | `'circle'` | Shape of the magnifying glass (possible values: `'circle'`, `'square'`)                            |
+| `mgShowOverflow` | Boolean       | `true`     | Set this to `false` to cut off the magnifying glass at the image borders                           |
+| `mgMouseOffsetX` | Number        | `0`        | Horizontal offset of the magnifying glass in px when hovering with a mouse                         |
+| `mgMouseOffsetY` | Number        | `0`        | Vertical offset of the magnifying glass in px when hovering with a mouse                           |
+| `mgTouchOffsetX` | Number        | `-50`      | Horizontal offset of the magnifying glass in px when dragging on a touch screen                    |
+| `mgTouchOffsetY` | Number        | `-50`      | Vertical offset of the magnifying glass in px when dragging on a touch screen                      |
 
 Any other props will be passed down to the `<img>` element.
 
 When disabling `mgShowOverflow`, it's recommended that you also set all offsets to `0`.
-
 
 ## Custom styling
 
@@ -72,7 +70,6 @@ When disabling `mgShowOverflow`, it's recommended that you also set all offsets 
   // Styles for magnifying glass
 }
 ```
-
 
 ## Development
 

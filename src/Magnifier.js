@@ -1,10 +1,9 @@
-import React, { PureComponent } from 'react';
-import PropTypes from 'prop-types';
-import debounce from 'lodash.debounce';
-import throttle from 'lodash.throttle';
+import React, { PureComponent } from "react";
+import PropTypes from "prop-types";
+import debounce from "lodash.debounce";
+import throttle from "lodash.throttle";
 
-import './style.scss';
-
+import "./style.scss";
 
 const propTypes = {
 	// Image
@@ -21,7 +20,7 @@ const propTypes = {
 	mgWidth: PropTypes.number,
 	mgHeight: PropTypes.number,
 	mgBorderWidth: PropTypes.number,
-	mgShape: PropTypes.oneOf(['circle', 'square']),
+	mgShape: PropTypes.oneOf(["circle", "square"]),
 	mgShowOverflow: PropTypes.bool,
 	mgMouseOffsetX: PropTypes.number,
 	mgMouseOffsetY: PropTypes.number,
@@ -31,9 +30,9 @@ const propTypes = {
 
 const defaultProps = {
 	// Image
-	width: '100%',
-	height: 'auto',
-	className: '',
+	width: "100%",
+	height: "auto",
+	className: "",
 
 	// Zoom image
 	zoomImgSrc: null,
@@ -43,7 +42,7 @@ const defaultProps = {
 	mgWidth: 150,
 	mgHeight: 150,
 	mgBorderWidth: 2,
-	mgShape: 'circle',
+	mgShape: "circle",
 	mgShowOverflow: true,
 	mgMouseOffsetX: 0,
 	mgMouseOffsetY: 0,
@@ -66,7 +65,7 @@ export default class Magnifier extends PureComponent {
 	constructor(props) {
 		super(props);
 		if (!props.src) {
-			throw Error('Missing src prop');
+			throw Error("Missing src prop");
 		}
 
 		this.state = {
@@ -95,29 +94,29 @@ export default class Magnifier extends PureComponent {
 	componentDidMount() {
 		// Add mouse/touch event listeners to image element (assigned in render function)
 		// `passive: false` prevents scrolling on touch move
-		this.img.addEventListener('mouseenter', this.onMouseEnter, { passive: false });
-		this.img.addEventListener('mousemove', this.onMouseMove, { passive: false });
-		this.img.addEventListener('mouseout', this.onMouseOut, { passive: false });
-		this.img.addEventListener('touchstart', this.onTouchStart, { passive: false });
-		this.img.addEventListener('touchmove', this.onTouchMove, { passive: false });
-		this.img.addEventListener('touchend', this.onTouchEnd, { passive: false });
+		this.img.addEventListener("mouseenter", this.onMouseEnter, { passive: false });
+		this.img.addEventListener("mousemove", this.onMouseMove, { passive: false });
+		this.img.addEventListener("mouseout", this.onMouseOut, { passive: false });
+		this.img.addEventListener("touchstart", this.onTouchStart, { passive: false });
+		this.img.addEventListener("touchmove", this.onTouchMove, { passive: false });
+		this.img.addEventListener("touchend", this.onTouchEnd, { passive: false });
 
 		// Re-calculate image bounds on window resize
-		window.addEventListener('resize', this.calcImgBoundsDebounced);
+		window.addEventListener("resize", this.calcImgBoundsDebounced);
 		// Re-calculate image bounds on scroll (useCapture: catch scroll events in entire DOM)
-		window.addEventListener('scroll', this.calcImgBoundsDebounced, true);
+		window.addEventListener("scroll", this.calcImgBoundsDebounced, true);
 	}
 
 	componentWillUnmount() {
 		// Remove all event listeners
-		this.img.removeEventListener('mouseenter', this.onMouseMove);
-		this.img.removeEventListener('mousemove', this.onMouseMove);
-		this.img.removeEventListener('mouseout', this.onMouseMove);
-		this.img.removeEventListener('touchstart', this.onMouseMove);
-		this.img.removeEventListener('touchmove', this.onMouseMove);
-		this.img.removeEventListener('touchend', this.onMouseMove);
-		window.removeEventListener('resize', this.calcImgBoundsDebounced);
-		window.removeEventListener('scroll', this.calcImgBoundsDebounced, true);
+		this.img.removeEventListener("mouseenter", this.onMouseMove);
+		this.img.removeEventListener("mousemove", this.onMouseMove);
+		this.img.removeEventListener("mouseout", this.onMouseMove);
+		this.img.removeEventListener("touchstart", this.onMouseMove);
+		this.img.removeEventListener("touchmove", this.onMouseMove);
+		this.img.removeEventListener("touchend", this.onMouseMove);
+		window.removeEventListener("resize", this.calcImgBoundsDebounced);
+		window.removeEventListener("scroll", this.calcImgBoundsDebounced, true);
 	}
 
 	onMouseEnter() {
@@ -139,6 +138,12 @@ export default class Magnifier extends PureComponent {
 				mgOffsetY: mgMouseOffsetY,
 			});
 		}
+	}
+
+	onMouseOut() {
+		this.setState({
+			showZoom: false,
+		});
 	}
 
 	onTouchStart(e) {
@@ -170,12 +175,6 @@ export default class Magnifier extends PureComponent {
 				});
 			}
 		}
-	}
-
-	onMouseOut() {
-		this.setState({
-			showZoom: false,
-		});
 	}
 
 	onTouchEnd() {
@@ -212,12 +211,12 @@ export default class Magnifier extends PureComponent {
 		const { mgOffsetX, mgOffsetY, relX, relY, showZoom } = this.state;
 
 		// Show/hide magnifying glass (opacity needed for transition)
-		let mgClasses = 'magnifying-glass';
+		let mgClasses = "magnifying-glass";
 		if (showZoom) {
-			mgClasses += ' visible';
+			mgClasses += " visible";
 		}
-		if (mgShape === 'circle') {
-			mgClasses += ' circle';
+		if (mgShape === "circle") {
+			mgClasses += " circle";
 		}
 
 		return (
@@ -226,7 +225,7 @@ export default class Magnifier extends PureComponent {
 				style={{
 					width,
 					height,
-					overflow: mgShowOverflow ? 'visible' : 'hidden',
+					overflow: mgShowOverflow ? "visible" : "hidden",
 				}}
 			>
 				<img // eslint-disable-line jsx-a11y/alt-text
@@ -238,28 +237,27 @@ export default class Magnifier extends PureComponent {
 					onLoad={() => {
 						this.calcImgBounds();
 					}}
-					ref={(e) => {
+					ref={e => {
 						this.img = e;
 					}}
 				/>
-				{
-					this.imgBounds
-						&& (
-							<div
-								className={mgClasses}
-								style={{
-									width: mgWidth,
-									height: mgHeight,
-									left: `calc(${relX * 100}% - ${mgWidth / 2}px + ${mgOffsetX}px - ${mgBorderWidth}px)`,
-									top: `calc(${relY * 100}% - ${mgHeight / 2}px + ${mgOffsetY}px - ${mgBorderWidth}px)`,
-									backgroundImage: `url(${zoomImgSrc || src})`,
-									backgroundPosition: `calc(${relX * 100}% + ${mgWidth / 2}px - ${relX * mgWidth}px) calc(${relY * 100}% + ${mgHeight / 2}px - ${relY * mgWidth}px)`,
-									backgroundSize: `${zoomFactor * this.imgBounds.width}% ${zoomFactor * this.imgBounds.height}%`,
-									borderWidth: mgBorderWidth,
-								}}
-							/>
-						)
-				}
+				{this.imgBounds && (
+					<div
+						className={mgClasses}
+						style={{
+							width: mgWidth,
+							height: mgHeight,
+							left: `calc(${relX * 100}% - ${mgWidth / 2}px + ${mgOffsetX}px - ${mgBorderWidth}px)`,
+							top: `calc(${relY * 100}% - ${mgHeight / 2}px + ${mgOffsetY}px - ${mgBorderWidth}px)`,
+							backgroundImage: `url(${zoomImgSrc || src})`,
+							backgroundPosition: `calc(${relX * 100}% + ${mgWidth / 2}px - ${relX *
+								mgWidth}px) calc(${relY * 100}% + ${mgHeight / 2}px - ${relY * mgWidth}px)`,
+							backgroundSize: `${zoomFactor * this.imgBounds.width}% ${zoomFactor *
+								this.imgBounds.height}%`,
+							borderWidth: mgBorderWidth,
+						}}
+					/>
+				)}
 			</div>
 		);
 	}

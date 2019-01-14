@@ -1,28 +1,27 @@
-import babel from 'rollup-plugin-babel';
-import postcss from 'rollup-plugin-postcss';
+import babel from "rollup-plugin-babel";
+import postcss from "rollup-plugin-postcss";
 
-import pkg from './package.json';
-
+import pkg from "./package.json";
 
 export default {
-	input: 'src/Magnifier',
+	input: "src/Magnifier",
 	output: [
 		{
 			file: pkg.main,
-			format: 'cjs',
+			format: "cjs",
 			sourcemap: true,
 		},
 		{
 			file: pkg.module,
-			format: 'es',
+			format: "es",
 			sourcemap: true,
 		},
 	],
-	external: ['react', 'prop-types', 'lodash.debounce', 'lodash.throttle'],
+	external: ["react", "prop-types", "lodash.debounce", "lodash.throttle"],
 	plugins: [
 		postcss(),
 		babel({
-			exclude: 'node_modules/**',
+			exclude: "node_modules/**",
 		}),
 	],
 };
