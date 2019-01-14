@@ -1,0 +1,33 @@
+root: true
+
+extends:
+  - airbnb
+  - prettier
+
+env:
+  browser: true
+  node: true
+
+rules:
+  capitalized-comments:
+    - error
+    - always
+    - ignoreConsecutiveComments: true
+  no-console:
+    - error
+    - allow:
+        - error
+
+  # React
+  react/button-has-type: error
+  react/jsx-filename-extension:
+    - error
+    - extensions:
+        - .js
+  react/jsx-indent:
+    - error
+    - tab
+  react/jsx-indent-props:
+    - error
+    - tab
+  react/jsx-one-expression-per-line: off
