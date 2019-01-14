@@ -141,7 +141,7 @@ export default class Magnifier extends PureComponent {
 		}
 	}
 
-	onTouchStart(e) { // eslint-disable-line class-methods-use-this
+	onTouchStart(e) {
 		e.preventDefault(); // Prevent mouse event from being fired
 
 		this.calcImgBounds();
