@@ -85,6 +85,7 @@ export default class Magnifier extends PureComponent {
 		this.onMouseEnter = this.onMouseEnter.bind(this);
 		this.onMouseMove = throttle(this.onMouseMove.bind(this), 20, { trailing: false });
 		this.onMouseOut = this.onMouseOut.bind(this);
+		this.onTouchStart = this.onTouchStart.bind(this);
 		this.onTouchMove = throttle(this.onTouchMove.bind(this), 20, { trailing: false });
 		this.onTouchEnd = this.onTouchEnd.bind(this);
 		this.calcImgBounds = this.calcImgBounds.bind(this);
