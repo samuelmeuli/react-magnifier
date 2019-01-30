@@ -8,6 +8,7 @@ import "./style.scss";
 const propTypes = {
 	// Image
 	src: PropTypes.string.isRequired,
+	alt: PropTypes.string,
 	width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
 	className: PropTypes.string,
@@ -33,6 +34,7 @@ const defaultProps = {
 	width: "100%",
 	height: "auto",
 	className: "",
+	alt: "",
 
 	// Zoom image
 	zoomImgSrc: null,
@@ -192,6 +194,7 @@ export default class Magnifier extends PureComponent {
 	render() {
 		const {
 			src,
+			alt,
 			width,
 			height,
 			className,
@@ -231,6 +234,7 @@ export default class Magnifier extends PureComponent {
 				<img // eslint-disable-line jsx-a11y/alt-text
 					className="magnifier-image"
 					src={src}
+					alt={alt}
 					width="100%"
 					height="100%"
 					{...otherProps}
