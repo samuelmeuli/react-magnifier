@@ -1,8 +1,5 @@
-/* eslint import/no-extraneous-dependencies: 0 */
-
 import React from "react";
 import { storiesOf, addDecorator } from "@storybook/react";
-
 import Magnifier from "../lib/Magnifier.es";
 import testImage from "./test-image.jpg";
 import testImageSmall from "./test-image-small.jpg";

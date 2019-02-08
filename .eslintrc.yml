@@ -2,6 +2,7 @@ root: true
 
 extends:
   - airbnb
+  - "@samuelmeuli/eslint-config/react"
   - prettier
 
 env:
@@ -9,25 +10,9 @@ env:
   node: true
 
 rules:
-  capitalized-comments:
+  import/no-extraneous-dependencies:
     - error
-    - always
-    - ignoreConsecutiveComments: true
-  no-console:
-    - error
-    - allow:
-        - error
-
-  # React
-  react/button-has-type: error
-  react/jsx-filename-extension:
-    - error
-    - extensions:
-        - .js
-  react/jsx-indent:
-    - error
-    - tab
-  react/jsx-indent-props:
-    - error
-    - tab
-  react/jsx-one-expression-per-line: off
+    - devDependencies:
+        - "rollup.config.js"
+        - ".storybook/**/*.js"
+        - "stories/**/*.js"
