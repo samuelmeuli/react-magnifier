@@ -41,7 +41,7 @@
 	},
 	"devDependencies": {
 		"@babel/core": "^7.3.4",
-		"@samuelmeuli/eslint-config": "^2.0.0",
+		"@samuelmeuli/eslint-config": "~2.0.0",
 		"@storybook/react": "^5.0.2",
 		"@typescript-eslint/eslint-plugin": "^1.4.2",
 		"@typescript-eslint/parser": "^1.4.2",

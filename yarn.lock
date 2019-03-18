@@ -1010,7 +1010,7 @@
     react-lifecycles-compat "^3.0.4"
     warning "^3.0.0"
 
-"@samuelmeuli/eslint-config@^2.0.0":
+"@samuelmeuli/eslint-config@~2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@samuelmeuli/eslint-config/-/eslint-config-2.0.0.tgz#75edaeb7283a27e9fe2255a07e3668cb9d5b2241"
   integrity sha512-T5N5zqWYb5JUrb0oEiuGWRMbCYaM6qgnqTqf6hpZ2EuLeBwtz1l3gkQ2mwPuBz/qndutO419GbQSI9W4ehgNUg==
