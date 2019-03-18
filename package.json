@@ -11,8 +11,8 @@
 		"magnifier",
 		"magnifying glass"
 	],
-	"main": "lib/Magnifier.js",
-	"module": "lib/Magnifier.es.js",
+	"main": "dist/js/Magnifier.js",
+	"module": "dist/js/Magnifier.es.js",
 	"author": "Samuel Meuli <me@samuelmeuli.com>",
 	"repository": "github:samuelmeuli/react-magnifier",
 	"homepage": "https://samuelmeuli.github.io/react-magnifier",
@@ -22,26 +22,29 @@
 		"start:rollup": "rollup --config --sourcemap --watch",
 		"start:storybook": "start-storybook --port 3000",
 		"build": "run-s build:*",
-		"build:clean": "rm -rf lib",
+		"build:clean": "rm -rf dist",
 		"build:rollup": "rollup --config",
-		"build:storybook": "build-storybook --output-dir dist",
+		"build:storybook": "build-storybook --output-dir dist/storybook",
 		"format": "prettier --write",
-		"lint": "eslint --fix"
+		"lint:js": "eslint --fix",
+		"lint:ts": "eslint --ext .tsx --fix"
 	},
 	"dependencies": {
+		"@types/lodash.debounce": "^4.0.6",
+		"@types/lodash.throttle": "^4.1.6",
+		"@types/react": "^16.8.8",
 		"lodash.debounce": "^4.0.8",
-		"lodash.throttle": "^4.1.1",
-		"prop-types": "^15.7.2"
+		"lodash.throttle": "^4.1.1"
 	},
 	"peerDependencies": {
 		"react": "^16.0.0"
 	},
 	"devDependencies": {
 		"@babel/core": "^7.3.4",
-		"@babel/preset-env": "^7.3.4",
-		"@babel/preset-react": "^7.0.0",
-		"@samuelmeuli/eslint-config": "~1.2.0",
+		"@samuelmeuli/eslint-config": "^2.0.0",
 		"@storybook/react": "^5.0.2",
+		"@typescript-eslint/eslint-plugin": "^1.4.2",
+		"@typescript-eslint/parser": "^1.4.2",
 		"babel-loader": "^8.0.4",
 		"eslint": "^5.15.2",
 		"eslint-config-airbnb": "17.1.0",
@@ -58,12 +61,14 @@
 		"react": "^16.8.4",
 		"react-dom": "^16.8.4",
 		"rollup": "^1.6.0",
-		"rollup-plugin-babel": "^4.3.2",
-		"rollup-plugin-postcss": "^2.0.3"
+		"rollup-plugin-postcss": "^2.0.3",
+		"rollup-plugin-typescript2": "^0.20.1",
+		"typescript": "^3.3.3333"
 	},
 	"files": [
-		"lib/"
+		"dist/js/"
 	],
+	"types": "dist/js/Magnifier.d.ts",
 	"husky": {
 		"hooks": {
 			"pre-commit": "lint-staged"
@@ -72,7 +77,12 @@
 	"lint-staged": {
 		"*.js": [
 			"yarn format",
-			"yarn lint",
+			"yarn lint:js",
+			"git add"
+		],
+		"*.ts": [
+			"yarn format",
+			"yarn lint:ts",
 			"git add"
 		],
 		"*.{json,md,scss,yml}": [

@@ -1,4 +1,5 @@
 import { addParameters, configure } from "@storybook/react";
+
 import pkg from "../package";
 
 // Hide add-on menu
@@ -13,7 +14,7 @@ addParameters({
 
 function loadStories() {
 	// Import all *.stories.js files
-	const imports = require.context("../stories", true, /.stories.js$/);
+	const imports = require.context("../stories", true, /.stories.jsx?$/);
 	imports.keys().forEach(filename => imports(filename));
 }
 

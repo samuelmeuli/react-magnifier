@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf, addDecorator } from "@storybook/react";
-import Magnifier from "../lib/Magnifier.es";
+import Magnifier from "../dist/js/Magnifier.es";
 import testImage from "./test-image.jpg";
 import testImageSmall from "./test-image-small.jpg";
 
