@@ -11,12 +11,12 @@
 .magnifying-glass {
 	position: absolute;
 	z-index: 1;
-	transition: opacity 0.3s;
 	background: #e5e5e5 no-repeat; // Use opaque background to hide main image when using an offset
 	border: solid #ebebeb;
 	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
-	pointer-events: none;
 	opacity: 0; // Needed for transition
+	transition: opacity 0.3s;
+	pointer-events: none;
 
 	&.circle {
 		border-radius: 50%;

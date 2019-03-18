@@ -27,7 +27,8 @@
 		"build:storybook": "build-storybook --output-dir dist/storybook",
 		"format": "prettier --write",
 		"lint:js": "eslint --fix",
-		"lint:ts": "eslint --ext .tsx --fix"
+		"lint:ts": "eslint --ext .tsx --fix",
+		"lint:scss": "stylelint --fix --syntax scss"
 	},
 	"dependencies": {
 		"@types/lodash.debounce": "^4.0.6",
@@ -42,6 +43,7 @@
 	"devDependencies": {
 		"@babel/core": "^7.3.4",
 		"@samuelmeuli/eslint-config": "~2.0.0",
+		"@samuelmeuli/stylelint-config": "~1.0.0",
 		"@storybook/react": "^5.0.2",
 		"@typescript-eslint/eslint-plugin": "^1.4.2",
 		"@typescript-eslint/parser": "^1.4.2",
@@ -63,6 +65,7 @@
 		"rollup": "^1.6.0",
 		"rollup-plugin-postcss": "^2.0.3",
 		"rollup-plugin-typescript2": "^0.20.1",
+		"stylelint": "^9.10.1",
 		"typescript": "^3.3.3333"
 	},
 	"files": [
@@ -85,7 +88,12 @@
 			"yarn lint:ts",
 			"git add"
 		],
-		"*.{json,md,scss,yml}": [
+		"*.scss": [
+			"yarn format",
+			"yarn lint:scss",
+			"git add"
+		],
+		"*.{json,md,yml}": [
 			"yarn format",
 			"git add"
 		]
