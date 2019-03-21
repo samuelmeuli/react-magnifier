@@ -78,12 +78,12 @@
 		}
 	},
 	"lint-staged": {
-		"*.js": [
+		"*.{js,jsx}": [
 			"yarn format",
 			"yarn lint:js",
 			"git add"
 		],
-		"*.ts": [
+		"*.{ts,tsx}": [
 			"yarn format",
 			"yarn lint:ts",
 			"git add"

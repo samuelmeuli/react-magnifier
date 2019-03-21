@@ -29,15 +29,15 @@ interface Props {
 }
 
 interface State {
-	showZoom: boolean,
+	showZoom: boolean;
 
 	// Magnifying glass offset
-	mgOffsetX: number,
-	mgOffsetY: number,
+	mgOffsetX: number;
+	mgOffsetY: number;
 
 	// Mouse position relative to image
-	relX: number,
-	relY: number,
+	relX: number;
+	relY: number;
 }
 
 export default class Magnifier extends PureComponent<Props, State> {
