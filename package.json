@@ -26,8 +26,8 @@
 		"build:rollup": "rollup --config",
 		"build:storybook": "build-storybook --output-dir dist/storybook",
 		"format": "prettier --write",
-		"lint:js": "eslint --fix",
-		"lint:ts": "eslint --ext .tsx --fix",
+		"lint:js": "eslint --ext .js,.jsx --fix",
+		"lint:ts": "eslint --ext .ts,.tsx --fix",
 		"lint:scss": "stylelint --fix --syntax scss"
 	},
 	"dependencies": {
