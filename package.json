@@ -26,9 +26,10 @@
 		"build:rollup": "rollup --config",
 		"build:storybook": "build-storybook --output-dir dist/storybook",
 		"format": "prettier --write",
-		"lint:js": "eslint --ext .js,.jsx --fix",
-		"lint:ts": "eslint --ext .ts,.tsx --fix",
-		"lint:scss": "stylelint --fix --syntax scss"
+		"lint:css": "stylelint --fix --max-warnings 0",
+		"lint:scss": "stylelint --fix --max-warnings 0 --syntax scss",
+		"lint:js": "eslint --ext .js,.jsx --fix --max-warnings 0",
+		"lint:ts": "eslint --ext .ts,.tsx --fix --max-warnings 0"
 	},
 	"dependencies": {
 		"@types/lodash.debounce": "^4.0.6",
