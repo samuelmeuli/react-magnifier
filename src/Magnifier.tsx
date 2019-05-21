@@ -1,6 +1,6 @@
-import React, { PureComponent } from "react";
 import debounce from "lodash.debounce";
 import throttle from "lodash.throttle";
+import React, { PureComponent } from "react";
 import "./style.scss";
 
 type mgShape = "circle" | "square";
@@ -48,6 +48,8 @@ export default class Magnifier extends PureComponent<Props, State> {
 		relX: 0,
 		relY: 0,
 	};
+
+	calcImgBoundsDebounced: () => void;
 
 	img: HTMLElement = null;
 
@@ -188,8 +190,6 @@ export default class Magnifier extends PureComponent<Props, State> {
 		}
 	}
 
-	calcImgBoundsDebounced: () => void;
-
 	render(): React.ReactElement {
 		/* eslint-disable @typescript-eslint/no-unused-vars */
 		const {
@@ -237,11 +237,11 @@ export default class Magnifier extends PureComponent<Props, State> {
 					width="100%"
 					height="100%"
 					{...otherProps}
-					onLoad={() => {
+					onLoad={(): void => {
 						this.calcImgBounds();
 					}}
-					ref={e => {
-						this.img = e;
+					ref={(img: HTMLImageElement): void => {
+						this.img = img;
 					}}
 				/>
 				{this.imgBounds && (
