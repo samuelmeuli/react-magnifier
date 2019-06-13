@@ -11,8 +11,9 @@
 		"magnifier",
 		"magnifying glass"
 	],
-	"main": "dist/js/Magnifier.js",
-	"module": "dist/js/Magnifier.es.js",
+	"main": "./dist/js/Magnifier.js",
+	"module": "./dist/js/Magnifier.es.js",
+	"types": "./dist/js/Magnifier.d.ts",
 	"author": "Samuel Meuli <me@samuelmeuli.com>",
 	"repository": "github:samuelmeuli/react-magnifier",
 	"homepage": "https://react-magnifier.samuelmeuli.com",
@@ -22,9 +23,9 @@
 		"start:rollup": "rollup --config --sourcemap --watch",
 		"start:storybook": "start-storybook --port 3000",
 		"build": "run-s build:*",
-		"build:clean": "rm -rf dist",
+		"build:clean": "rm -rf ./dist/",
 		"build:rollup": "rollup --config",
-		"build:storybook": "build-storybook --output-dir dist/storybook",
+		"build:storybook": "build-storybook --output-dir ./dist/storybook/",
 		"format": "prettier --write",
 		"lint:css": "stylelint --fix --max-warnings 0",
 		"lint:scss": "stylelint --fix --max-warnings 0 --syntax scss",
@@ -73,33 +74,69 @@
 		"typescript": "^3.3.3333"
 	},
 	"files": [
-		"dist/js/"
+		"./dist/js/"
 	],
-	"types": "dist/js/Magnifier.d.ts",
-	"husky": {
-		"hooks": {
-			"pre-commit": "lint-staged"
+	"eslintConfig": {
+		"root": true,
+		"extends": [
+			"@samuelmeuli/eslint-config/react-typescript",
+			"prettier",
+			"prettier/@typescript-eslint"
+		],
+		"env": {
+			"browser": true,
+			"node": true
+		},
+		"rules": {
+			"import/no-extraneous-dependencies": [
+				"error",
+				{
+					"devDependencies": [
+						"./.storybook/**/*.js",
+						"./rollup.config.js",
+						"./stories/**/*.jsx"
+					]
+				}
+			],
+			"react/jsx-sort-default-props": "off"
 		}
+	},
+	"stylelint": {
+		"extends": "@samuelmeuli/stylelint-config"
+	},
+	"prettier": {
+		"printWidth": 100,
+		"trailingComma": "all"
 	},
 	"lint-staged": {
 		"*.{js,jsx}": [
-			"yarn format",
 			"yarn lint:js",
+			"yarn format",
 			"git add"
 		],
 		"*.{ts,tsx}": [
-			"yarn format",
 			"yarn lint:ts",
+			"yarn format",
+			"git add"
+		],
+		"*.css": [
+			"yarn lint:css",
+			"yarn format",
 			"git add"
 		],
 		"*.scss": [
-			"yarn format",
 			"yarn lint:scss",
+			"yarn format",
 			"git add"
 		],
 		"*.{json,md,yml}": [
 			"yarn format",
 			"git add"
 		]
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
 	}
 }
