@@ -6,7 +6,7 @@
 - Supports touch screens
 - Allows different files for large image and magnifying glass (e.g. thumbnail and high-resolution image)
 
-→ **[Demo](https://samuelmeuli.github.io/react-magnifier)**
+→ **[Demo](https://react-magnifier.samuelmeuli.com)**
 
 <p align="center">
   <img src=".github/demo.gif" width=600 alt="Demo">

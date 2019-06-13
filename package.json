@@ -15,7 +15,7 @@
 	"module": "dist/js/Magnifier.es.js",
 	"author": "Samuel Meuli <me@samuelmeuli.com>",
 	"repository": "github:samuelmeuli/react-magnifier",
-	"homepage": "https://samuelmeuli.github.io/react-magnifier",
+	"homepage": "https://react-magnifier.samuelmeuli.com",
 	"license": "MIT",
 	"scripts": {
 		"start": "npm-run-all build:rollup --parallel start:*",
