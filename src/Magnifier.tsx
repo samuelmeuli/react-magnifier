@@ -8,24 +8,24 @@ type mgShape = "circle" | "square";
 interface Props {
 	// Image
 	src: string;
-	width?: string | number;
-	height?: string | number;
-	className?: string;
+	width: string | number;
+	height: string | number;
+	className: string;
 
 	// Zoom image
-	zoomImgSrc?: string;
-	zoomFactor?: number;
+	zoomImgSrc: string;
+	zoomFactor: number;
 
 	// Magnifying glass
-	mgWidth?: number;
-	mgHeight?: number;
-	mgBorderWidth?: number;
-	mgShape?: mgShape;
-	mgShowOverflow?: boolean;
-	mgMouseOffsetX?: number;
-	mgMouseOffsetY?: number;
-	mgTouchOffsetX?: number;
-	mgTouchOffsetY?: number;
+	mgWidth: number;
+	mgHeight: number;
+	mgBorderWidth: number;
+	mgShape: mgShape;
+	mgShowOverflow: boolean;
+	mgMouseOffsetX: number;
+	mgMouseOffsetY: number;
+	mgTouchOffsetX: number;
+	mgTouchOffsetY: number;
 }
 
 interface State {
@@ -41,7 +41,7 @@ interface State {
 }
 
 export default class Magnifier extends PureComponent<Props, State> {
-	state = {
+	state: Readonly<State> = {
 		showZoom: false,
 		mgOffsetX: 0,
 		mgOffsetY: 0,
@@ -51,9 +51,9 @@ export default class Magnifier extends PureComponent<Props, State> {
 
 	calcImgBoundsDebounced: () => void;
 
-	img: HTMLElement = null;
+	img: HTMLElement;
 
-	imgBounds: DOMRect | ClientRect = null;
+	imgBounds: DOMRect | ClientRect;
 
 	static defaultProps = {
 		// Image
