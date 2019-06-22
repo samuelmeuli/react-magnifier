@@ -14,7 +14,11 @@
 	"main": "./dist/js/Magnifier.js",
 	"module": "./dist/js/Magnifier.es.js",
 	"types": "./dist/js/Magnifier.d.ts",
-	"author": "Samuel Meuli <me@samuelmeuli.com>",
+	"author": {
+		"name": "Samuel Meuli",
+		"email": "me@samuelmeuli.com",
+		"url": "https://samuelmeuli.com"
+	},
 	"repository": "github:samuelmeuli/react-magnifier",
 	"homepage": "https://react-magnifier.samuelmeuli.com",
 	"license": "MIT",
@@ -48,6 +52,7 @@
 		"@babel/core": "^7.3.4",
 		"@samuelmeuli/eslint-config": "~2.0.0",
 		"@samuelmeuli/stylelint-config": "~1.0.0",
+		"@samuelmeuli/tsconfig": "^0.1.1",
 		"@storybook/react": "^5.0.2",
 		"@typescript-eslint/eslint-plugin": "^1.4.2",
 		"@typescript-eslint/parser": "^1.4.2",
