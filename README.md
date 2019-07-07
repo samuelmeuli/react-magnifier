@@ -27,7 +27,7 @@ import Magnifier from "react-magnifier";
 import yourImage from "./path/to/image";
 
 export default function ExampleComponent() {
-  return <Magnifier src={logo} width={500} />;
+  return <Magnifier src={yourImage} width={500} />;
 }
 ```
 
