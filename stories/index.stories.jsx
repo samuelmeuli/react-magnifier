@@ -1,8 +1,9 @@
+import { addDecorator, storiesOf } from "@storybook/react";
 import React from "react";
-import { storiesOf, addDecorator } from "@storybook/react";
-import Magnifier from "../dist/js/Magnifier.es";
-import testImage from "./test-image.jpg";
+
+import Magnifier from "../dist/Magnifier.es";
 import testImageSmall from "./test-image-small.jpg";
+import testImage from "./test-image.jpg";
 
 const IMG_WIDTH = "50%";
 

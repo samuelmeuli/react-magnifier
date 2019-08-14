@@ -11,9 +11,6 @@
 		"magnifier",
 		"magnifying glass"
 	],
-	"main": "./dist/js/Magnifier.js",
-	"module": "./dist/js/Magnifier.es.js",
-	"types": "./dist/js/Magnifier.d.ts",
 	"author": {
 		"name": "Samuel Meuli",
 		"email": "me@samuelmeuli.com",
@@ -22,14 +19,20 @@
 	"repository": "github:samuelmeuli/react-magnifier",
 	"homepage": "https://react-magnifier.samuelmeuli.com",
 	"license": "MIT",
+	"files": [
+		"./dist/"
+	],
+	"main": "./dist/Magnifier.js",
+	"module": "./dist/Magnifier.es.js",
+	"types": "./dist/Magnifier.d.ts",
 	"scripts": {
 		"start": "npm-run-all build:rollup --parallel start:*",
 		"start:rollup": "rollup --config --sourcemap --watch",
 		"start:storybook": "start-storybook --port 3000",
 		"build": "run-s build:*",
-		"build:clean": "rm -rf ./dist/",
+		"build:clean": "rm -rf ./dist/ ./dist-storybook/",
 		"build:rollup": "rollup --config",
-		"build:storybook": "build-storybook --output-dir ./dist/storybook/",
+		"build:storybook": "build-storybook --output-dir ./dist-storybook/",
 		"format": "prettier --write",
 		"lint:css": "stylelint --fix --max-warnings 0",
 		"lint:scss": "stylelint --fix --max-warnings 0 --syntax scss",
@@ -80,9 +83,6 @@
 		"stylelint": "^10.1.0",
 		"typescript": "^3.5.3"
 	},
-	"files": [
-		"./dist/js/"
-	],
 	"eslintConfig": {
 		"root": true,
 		"extends": [
