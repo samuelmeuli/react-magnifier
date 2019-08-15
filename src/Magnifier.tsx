@@ -1,7 +1,8 @@
+import "./style.scss";
+
 import debounce from "lodash.debounce";
 import throttle from "lodash.throttle";
 import React, { PureComponent } from "react";
-import "./style.scss";
 
 type mgShape = "circle" | "square";
 
@@ -41,20 +42,6 @@ interface State {
 }
 
 export default class Magnifier extends PureComponent<Props, State> {
-	state: Readonly<State> = {
-		showZoom: false,
-		mgOffsetX: 0,
-		mgOffsetY: 0,
-		relX: 0,
-		relY: 0,
-	};
-
-	calcImgBoundsDebounced: () => void;
-
-	img: HTMLElement;
-
-	imgBounds: DOMRect | ClientRect;
-
 	static defaultProps = {
 		// Image
 		width: "100%",
@@ -76,21 +63,29 @@ export default class Magnifier extends PureComponent<Props, State> {
 		mgTouchOffsetY: -50,
 	};
 
+	state: Readonly<State> = {
+		showZoom: false,
+		mgOffsetX: 0,
+		mgOffsetY: 0,
+		relX: 0,
+		relY: 0,
+	};
+
+	calcImgBoundsDebounced: () => void;
+
+	img: HTMLElement;
+
+	imgBounds: DOMRect | ClientRect;
+
 	constructor(props: Props) {
 		super(props);
 
-		// Function bindings
-		this.onMouseEnter = this.onMouseEnter.bind(this);
 		this.onMouseMove = throttle(this.onMouseMove.bind(this), 20, { trailing: false });
-		this.onMouseOut = this.onMouseOut.bind(this);
-		this.onTouchStart = this.onTouchStart.bind(this);
 		this.onTouchMove = throttle(this.onTouchMove.bind(this), 20, { trailing: false });
-		this.onTouchEnd = this.onTouchEnd.bind(this);
-		this.calcImgBounds = this.calcImgBounds.bind(this);
 		this.calcImgBoundsDebounced = debounce(this.calcImgBounds, 200);
 	}
 
-	componentDidMount(): void {
+	componentDidMount = (): void => {
 		// Add mouse/touch event listeners to image element (assigned in render function)
 		// `passive: false` prevents scrolling on touch move
 		this.img.addEventListener("mouseenter", this.onMouseEnter, { passive: false });
@@ -104,9 +99,9 @@ export default class Magnifier extends PureComponent<Props, State> {
 		window.addEventListener("resize", this.calcImgBoundsDebounced);
 		// Re-calculate image bounds on scroll (useCapture: catch scroll events in entire DOM)
 		window.addEventListener("scroll", this.calcImgBoundsDebounced, true);
-	}
+	};
 
-	componentWillUnmount(): void {
+	componentWillUnmount = (): void => {
 		// Remove all event listeners
 		this.img.removeEventListener("mouseenter", this.onMouseEnter);
 		this.img.removeEventListener("mousemove", this.onMouseMove);
@@ -116,13 +111,13 @@ export default class Magnifier extends PureComponent<Props, State> {
 		this.img.removeEventListener("touchend", this.onTouchEnd);
 		window.removeEventListener("resize", this.calcImgBoundsDebounced);
 		window.removeEventListener("scroll", this.calcImgBoundsDebounced, true);
-	}
+	};
 
-	onMouseEnter(): void {
+	onMouseEnter = (): void => {
 		this.calcImgBounds();
-	}
+	};
 
-	onMouseMove(e: MouseEvent): void {
+	onMouseMove = (e: MouseEvent): void => {
 		const { mgMouseOffsetX, mgMouseOffsetY } = this.props;
 
 		if (this.imgBounds) {
@@ -138,21 +133,21 @@ export default class Magnifier extends PureComponent<Props, State> {
 				showZoom: true,
 			});
 		}
-	}
+	};
 
-	onMouseOut(): void {
+	onMouseOut = (): void => {
 		this.setState({
 			showZoom: false,
 		});
-	}
+	};
 
-	onTouchStart(e: TouchEvent): void {
+	onTouchStart = (e: TouchEvent): void => {
 		e.preventDefault(); // Prevent mouse event from being fired
 
 		this.calcImgBounds();
-	}
+	};
 
-	onTouchMove(e: TouchEvent): void {
+	onTouchMove = (e: TouchEvent): void => {
 		e.preventDefault(); // Disable scroll on touch
 
 		if (this.imgBounds) {
@@ -176,21 +171,21 @@ export default class Magnifier extends PureComponent<Props, State> {
 				});
 			}
 		}
-	}
+	};
 
-	onTouchEnd(): void {
+	onTouchEnd = (): void => {
 		this.setState({
 			showZoom: false,
 		});
-	}
+	};
 
-	calcImgBounds(): void {
+	calcImgBounds = (): void => {
 		if (this.img) {
 			this.imgBounds = this.img.getBoundingClientRect();
 		}
-	}
+	};
 
-	render(): React.ReactElement {
+	render = (): React.ReactElement => {
 		/* eslint-disable @typescript-eslint/no-unused-vars */
 		const {
 			src,
@@ -231,7 +226,8 @@ export default class Magnifier extends PureComponent<Props, State> {
 					overflow: mgShowOverflow ? "visible" : "hidden",
 				}}
 			>
-				<img // eslint-disable-line jsx-a11y/alt-text
+				{/* eslint-disable-next-line jsx-a11y/alt-text */}
+				<img
 					className="magnifier-image"
 					src={src}
 					width="100%"
@@ -263,5 +259,5 @@ export default class Magnifier extends PureComponent<Props, State> {
 				)}
 			</div>
 		);
-	}
+	};
 }
