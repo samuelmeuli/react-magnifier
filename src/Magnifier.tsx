@@ -49,6 +49,7 @@ export default class Magnifier extends PureComponent<Props, State> {
 		className: "",
 
 		// Zoom image
+		zoomImgSrc: "",
 		zoomFactor: 1.5,
 
 		// Magnifying glass
