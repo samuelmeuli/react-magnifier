@@ -55,17 +55,17 @@ Any other props will be passed down to the `<img>` element. This way, you can e.
 
 ## Custom styling
 
-```scss
+```css
 .magnifier {
-  // Styles for <div> around image and magnifying glass
+  /* Styles for <div> around image and magnifying glass */
 }
 
 .magnifier-image {
-  // Styles for large image
+  /* Styles for large image */
 }
 
 .magnifying-glass {
-  // Styles for magnifying glass
+  /* Styles for magnifying glass */
 }
 ```
 
