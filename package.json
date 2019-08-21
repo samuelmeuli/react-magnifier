@@ -33,6 +33,7 @@
 		"build:clean": "rm -rf ./dist/ ./dist-storybook/",
 		"build:rollup": "rollup --config",
 		"build:storybook": "build-storybook --output-dir ./dist-storybook/",
+		"test": "tsc --noEmit",
 		"format": "prettier --write",
 		"lint:css": "stylelint --fix --max-warnings 0",
 		"lint:scss": "stylelint --fix --max-warnings 0 --syntax scss",
@@ -143,7 +144,7 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "lint-staged"
+			"pre-commit": "yarn test && lint-staged"
 		}
 	}
 }
