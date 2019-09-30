@@ -4,7 +4,7 @@ import typescript from "rollup-plugin-typescript2";
 import pkg from "./package.json";
 
 export default {
-	input: "src/Magnifier.tsx",
+	input: "./src/Magnifier.tsx",
 	output: [
 		{
 			file: pkg.main,
@@ -16,10 +16,5 @@ export default {
 		},
 	],
 	external: ["react", "lodash.debounce", "lodash.throttle"],
-	plugins: [
-		postcss(),
-		typescript({
-			cacheRoot: "node_modules/.cache/rollup-plugin-typescript2",
-		}),
-	],
+	plugins: [postcss(), typescript()],
 };
