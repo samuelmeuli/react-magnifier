@@ -42,6 +42,12 @@ interface State {
 }
 
 export default class Magnifier extends PureComponent<Props, State> {
+	img: HTMLElement;
+
+	imgBounds: DOMRect | ClientRect;
+
+	calcImgBoundsDebounced: () => void;
+
 	static defaultProps = {
 		// Image
 		width: "100%",
@@ -72,17 +78,15 @@ export default class Magnifier extends PureComponent<Props, State> {
 		relY: 0,
 	};
 
-	calcImgBoundsDebounced: () => void;
-
-	img: HTMLElement;
-
-	imgBounds: DOMRect | ClientRect;
-
 	constructor(props: Props) {
 		super(props);
 
-		this.onMouseMove = throttle(this.onMouseMove.bind(this), 20, { trailing: false });
-		this.onTouchMove = throttle(this.onTouchMove.bind(this), 20, { trailing: false });
+		this.onMouseMove = throttle(this.onMouseMove.bind(this), 20, {
+			trailing: false,
+		});
+		this.onTouchMove = throttle(this.onTouchMove.bind(this), 20, {
+			trailing: false,
+		});
 		this.calcImgBoundsDebounced = debounce(this.calcImgBounds, 200);
 	}
 
