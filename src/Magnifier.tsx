@@ -2,7 +2,7 @@ import "./style.scss";
 
 import debounce from "lodash.debounce";
 import throttle from "lodash.throttle";
-import React, { PureComponent } from "react";
+import React, { CSSProperties, PureComponent } from "react";
 
 type mgShape = "circle" | "square";
 
@@ -12,6 +12,8 @@ interface Props {
 	width: string | number;
 	height: string | number;
 	className: string;
+	alt: string | undefined;
+	style: CSSProperties | undefined;
 
 	// Zoom image
 	zoomImgSrc: string;
@@ -53,6 +55,8 @@ export default class Magnifier extends PureComponent<Props, State> {
 		width: "100%",
 		height: "auto",
 		className: "",
+		alt: undefined,
+		style: undefined,
 
 		// Zoom image
 		zoomImgSrc: "",
