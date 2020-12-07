@@ -56,7 +56,9 @@
 		"@samuelmeuli/prettier-config": "^1.0.0",
 		"@samuelmeuli/stylelint-config": "~3.0.0",
 		"@samuelmeuli/tsconfig": "^1.0.0",
-		"@storybook/react": "^5.3.14",
+		"@storybook/preset-scss": "^1.0.3",
+		"@storybook/preset-typescript": "^3.0.0",
+		"@storybook/react": "^6.1.10",
 		"@typescript-eslint/eslint-plugin": "^2.21.0",
 		"@typescript-eslint/parser": "^2.21.0",
 		"babel-loader": "^8.0.6",
@@ -79,6 +81,7 @@
 		"rollup-plugin-postcss": "^2.1.1",
 		"rollup-plugin-typescript2": "^0.26.0",
 		"sass": "^1.26.1",
+		"sass-loader": "^10.1.0",
 		"stylelint": "^12.0.0",
 		"typescript": "^3.8.2"
 	},
