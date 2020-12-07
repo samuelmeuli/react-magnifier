@@ -9,6 +9,7 @@ type mgShape = "circle" | "square";
 interface Props {
 	// Image
 	src: string;
+	overlays?: string[];
 	width: string | number;
 	height: string | number;
 	className: string;
@@ -194,6 +195,7 @@ export default class Magnifier extends PureComponent<Props, State> {
 		/* eslint-disable @typescript-eslint/no-unused-vars */
 		const {
 			src,
+			overlays,
 			width,
 			height,
 			className,
@@ -221,6 +223,8 @@ export default class Magnifier extends PureComponent<Props, State> {
 		if (mgShape === "circle") {
 			mgClasses += " circle";
 		}
+
+		const backgroundImage = overlays ? `${overlays.join(',')}, url("${zoomImgSrc || src}")` : `url("${zoomImgSrc || src}")`
 
 		return (
 			<div
@@ -253,7 +257,7 @@ export default class Magnifier extends PureComponent<Props, State> {
 							height: mgHeight,
 							left: `calc(${relX * 100}% - ${mgWidth / 2}px + ${mgOffsetX}px - ${mgBorderWidth}px)`,
 							top: `calc(${relY * 100}% - ${mgHeight / 2}px + ${mgOffsetY}px - ${mgBorderWidth}px)`,
-							backgroundImage: `url("${zoomImgSrc || src}")`,
+							backgroundImage,
 							backgroundPosition: `calc(${relX * 100}% + ${mgWidth / 2}px - ${relX *
 								mgWidth}px) calc(${relY * 100}% + ${mgHeight / 2}px - ${relY * mgWidth}px)`,
 							backgroundSize: `${zoomFactor * this.imgBounds.width}% ${zoomFactor *

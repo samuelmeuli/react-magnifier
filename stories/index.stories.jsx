@@ -1,7 +1,7 @@
 import { addDecorator, storiesOf } from "@storybook/react";
 import React from "react";
 
-import Magnifier from "../dist/Magnifier.es";
+import Magnifier from "../src/Magnifier";
 import BASE_64_IMG from "./test-image-base-64";
 import testImageSmall from "./test-image-small.jpg";
 import testImage from "./test-image.jpg";
@@ -34,5 +34,14 @@ storiesOf("Magnifier", module)
 	))
 	.add("Different images", () => (
 		<Magnifier src={testImageSmall} zoomImgSrc={testImage} width={IMG_WIDTH} />
+	))
+	.add("Overlays", () => (
+		<Magnifier src={testImage} overlays={[`repeating-linear-gradient(
+			45deg,
+			transparent,
+			transparent 10px,
+			rgba(0,0,0,0.2) 10px,
+			rgba(0,0,0,0.2) 20px
+		)`]} width={IMG_WIDTH} />
 	))
 	.add("Base64 image", () => <Magnifier src={BASE_64_IMG} width={IMG_WIDTH} />);
