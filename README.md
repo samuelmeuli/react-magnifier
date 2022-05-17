@@ -1,5 +1,7 @@
 # react-magnifier
 
+This is is the original version. Someone else made a Vue adaption, called [vue-magnifier](https://github.com/WebsiteBeaver/vue-magnifier) and Svelte version, called [svelte-magnifier](https://github.com/supercoww/svelte-magnifier).
+
 **React image zoom component**
 
 - Simple and customizable
