@@ -27,6 +27,7 @@ interface Props {
 	mgMouseOffsetY: number;
 	mgTouchOffsetX: number;
 	mgTouchOffsetY: number;
+	active:boolean;
 }
 
 interface State {
@@ -208,6 +209,7 @@ export default class Magnifier extends PureComponent<Props, State> {
 			mgTouchOffsetY,
 			mgShape,
 			mgShowOverflow,
+			active,
 			...otherProps
 		} = this.props;
 		/* eslint-enable @typescript-eslint/no-unused-vars */
@@ -245,7 +247,7 @@ export default class Magnifier extends PureComponent<Props, State> {
 						this.img = img;
 					}}
 				/>
-				{this.imgBounds && (
+				{(this.imgBounds && active) && (
 					<div
 						className={mgClasses}
 						style={{
