@@ -119,10 +119,5 @@
 		"*.{html,js,json,jsx,md,vue,yaml,yml}": [
 			"yarn format"
 		]
-	},
-	"husky": {
-		"hooks": {
-			"pre-commit": "yarn test && lint-staged"
-		}
 	}
 }
