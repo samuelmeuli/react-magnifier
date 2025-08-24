@@ -1,3 +1,6 @@
 dist/
 dist-storybook/
 node_modules/
+
+*storybook.log
+storybook-static

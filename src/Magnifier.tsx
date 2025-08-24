@@ -1,268 +1,203 @@
 import "./style.scss";
-
 import debounce from "lodash.debounce";
 import throttle from "lodash.throttle";
-import React, { PureComponent } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 
 type mgShape = "circle" | "square";
 
 interface Props {
-	// Image
-	src: string;
-	width: string | number;
-	height: string | number;
-	className: string;
+  // Image
+  src: string;
+  width?: string | number;
+  height?: string | number;
+  className?: string;
 
-	// Zoom image
-	zoomImgSrc: string;
-	zoomFactor: number;
+  // Zoom image
+  zoomImgSrc?: string;
+  zoomFactor?: number;
 
-	// Magnifying glass
-	mgWidth: number;
-	mgHeight: number;
-	mgBorderWidth: number;
-	mgShape: mgShape;
-	mgShowOverflow: boolean;
-	mgMouseOffsetX: number;
-	mgMouseOffsetY: number;
-	mgTouchOffsetX: number;
-	mgTouchOffsetY: number;
+  // Magnifying glass
+  mgWidth?: number;
+  mgHeight?: number;
+  mgBorderWidth?: number;
+  mgShape?: mgShape;
+  mgShowOverflow?: boolean;
+  mgMouseOffsetX?: number;
+  mgMouseOffsetY?: number;
+  mgTouchOffsetX?: number;
+  mgTouchOffsetY?: number;
 }
 
-interface State {
-	showZoom: boolean;
+const Magnifier: React.FC<Props> = ({
+  // Default props
+  src,
+  width = "100%",
+  height = "auto",
+  className = "",
+  zoomImgSrc = "",
+  zoomFactor = 1.5,
+  mgWidth = 150,
+  mgHeight = 150,
+  mgBorderWidth = 2,
+  mgShape = "circle",
+  mgShowOverflow = true,
+  mgMouseOffsetX = 0,
+  mgMouseOffsetY = 0,
+  mgTouchOffsetX = -50,
+  mgTouchOffsetY = -50,
+  ...otherProps
+}) => {
+  // State
+  const [showZoom, setShowZoom] = useState(false);
+  const [mgOffsetX, setMgOffsetX] = useState(0);
+  const [mgOffsetY, setMgOffsetY] = useState(0);
+  const [relX, setRelX] = useState(0);
+  const [relY, setRelY] = useState(0);
 
-	// Magnifying glass offset
-	mgOffsetX: number;
-	mgOffsetY: number;
+  // Refs
+  const imgRef = useRef<HTMLImageElement | null>(null);
+  const imgBoundsRef = useRef<DOMRect | null>(null);
 
-	// Mouse position relative to image
-	relX: number;
-	relY: number;
-}
+  // Calculate image bounds
+  const calcImgBounds = useCallback(() => {
+    if (imgRef.current) {
+      imgBoundsRef.current = imgRef.current.getBoundingClientRect();
+    }
+  }, []);
 
-export default class Magnifier extends PureComponent<Props, State> {
-	img: HTMLElement;
+  const calcImgBoundsDebounced = useCallback(debounce(calcImgBounds, 200), [calcImgBounds]);
 
-	imgBounds: DOMRect | ClientRect;
+  // Handlers
+  const onMouseEnter = useCallback(() => {
+    calcImgBounds();
+  }, [calcImgBounds]);
 
-	calcImgBoundsDebounced: () => void;
+  const onMouseMove = useCallback(
+    throttle((e: MouseEvent) => {
+      if (imgBoundsRef.current && imgRef.current) {
+        const relX = (e.clientX - imgBoundsRef.current.left) / imgRef.current.clientWidth;
+        const relY = (e.clientY - imgBoundsRef.current.top) / imgRef.current.clientHeight;
 
-	static defaultProps = {
-		// Image
-		width: "100%",
-		height: "auto",
-		className: "",
+        setMgOffsetX(mgMouseOffsetX);
+        setMgOffsetY(mgMouseOffsetY);
+        setRelX(relX);
+        setRelY(relY);
+        setShowZoom(true);
+      }
+    }, 20, { trailing: false }),
+    [mgMouseOffsetX, mgMouseOffsetY]
+  );
 
-		// Zoom image
-		zoomImgSrc: "",
-		zoomFactor: 1.5,
+  const onMouseOut = useCallback(() => {
+    setShowZoom(false);
+  }, []);
 
-		// Magnifying glass
-		mgWidth: 150,
-		mgHeight: 150,
-		mgBorderWidth: 2,
-		mgShape: "circle",
-		mgShowOverflow: true,
-		mgMouseOffsetX: 0,
-		mgMouseOffsetY: 0,
-		mgTouchOffsetX: -50,
-		mgTouchOffsetY: -50,
-	};
+  const onTouchStart = useCallback((e: TouchEvent) => {
+    e.preventDefault();
+    calcImgBounds();
+  }, [calcImgBounds]);
 
-	state: Readonly<State> = {
-		showZoom: false,
-		mgOffsetX: 0,
-		mgOffsetY: 0,
-		relX: 0,
-		relY: 0,
-	};
+  const onTouchMove = useCallback(
+    throttle((e: TouchEvent) => {
+      e.preventDefault();
+      if (imgBoundsRef.current && imgRef.current) {
+        const relX =
+          (e.targetTouches[0].clientX - imgBoundsRef.current.left) / imgRef.current.clientWidth;
+        const relY =
+          (e.targetTouches[0].clientY - imgBoundsRef.current.top) / imgRef.current.clientHeight;
 
-	constructor(props: Props) {
-		super(props);
+        if (relX >= 0 && relY >= 0 && relX <= 1 && relY <= 1) {
+          setMgOffsetX(mgTouchOffsetX);
+          setMgOffsetY(mgTouchOffsetY);
+          setRelX(relX);
+          setRelY(relY);
+          setShowZoom(true);
+        } else {
+          setShowZoom(false);
+        }
+      }
+    }, 20, { trailing: false }),
+    [mgTouchOffsetX, mgTouchOffsetY]
+  );
 
-		this.onMouseMove = throttle(this.onMouseMove.bind(this), 20, {
-			trailing: false,
-		});
-		this.onTouchMove = throttle(this.onTouchMove.bind(this), 20, {
-			trailing: false,
-		});
-		this.calcImgBoundsDebounced = debounce(this.calcImgBounds, 200);
-	}
+  const onTouchEnd = useCallback(() => {
+    setShowZoom(false);
+  }, []);
 
-	componentDidMount = (): void => {
-		// Add mouse/touch event listeners to image element (assigned in render function)
-		// `passive: false` prevents scrolling on touch move
-		this.img.addEventListener("mouseenter", this.onMouseEnter, { passive: false });
-		this.img.addEventListener("mousemove", this.onMouseMove, { passive: false });
-		this.img.addEventListener("mouseout", this.onMouseOut, { passive: false });
-		this.img.addEventListener("touchstart", this.onTouchStart, { passive: false });
-		this.img.addEventListener("touchmove", this.onTouchMove, { passive: false });
-		this.img.addEventListener("touchend", this.onTouchEnd, { passive: false });
+  // Lifecycle (event listeners)
+  useEffect(() => {
+    const img = imgRef.current;
+    if (!img) return;
 
-		// Re-calculate image bounds on window resize
-		window.addEventListener("resize", this.calcImgBoundsDebounced);
-		// Re-calculate image bounds on scroll (useCapture: catch scroll events in entire DOM)
-		window.addEventListener("scroll", this.calcImgBoundsDebounced, true);
-	};
+    // Mouse events
+    img.addEventListener("mouseenter", onMouseEnter, { passive: false });
+    img.addEventListener("mousemove", onMouseMove, { passive: false });
+    img.addEventListener("mouseout", onMouseOut, { passive: false });
 
-	componentWillUnmount = (): void => {
-		// Remove all event listeners
-		this.img.removeEventListener("mouseenter", this.onMouseEnter);
-		this.img.removeEventListener("mousemove", this.onMouseMove);
-		this.img.removeEventListener("mouseout", this.onMouseOut);
-		this.img.removeEventListener("touchstart", this.onTouchStart);
-		this.img.removeEventListener("touchmove", this.onTouchMove);
-		this.img.removeEventListener("touchend", this.onTouchEnd);
-		window.removeEventListener("resize", this.calcImgBoundsDebounced);
-		window.removeEventListener("scroll", this.calcImgBoundsDebounced, true);
-	};
+    // Touch events
+    img.addEventListener("touchstart", onTouchStart, { passive: false });
+    img.addEventListener("touchmove", onTouchMove, { passive: false });
+    img.addEventListener("touchend", onTouchEnd, { passive: false });
 
-	onMouseEnter = (): void => {
-		this.calcImgBounds();
-	};
+    // Window events
+    window.addEventListener("resize", calcImgBoundsDebounced);
+    window.addEventListener("scroll", calcImgBoundsDebounced, true);
 
-	onMouseMove = (e: MouseEvent): void => {
-		const { mgMouseOffsetX, mgMouseOffsetY } = this.props;
+    return () => {
+      img.removeEventListener("mouseenter", onMouseEnter);
+      img.removeEventListener("mousemove", onMouseMove);
+      img.removeEventListener("mouseout", onMouseOut);
+      img.removeEventListener("touchstart", onTouchStart);
+      img.removeEventListener("touchmove", onTouchMove);
+      img.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("resize", calcImgBoundsDebounced);
+      window.removeEventListener("scroll", calcImgBoundsDebounced, true);
+    };
+  }, [onMouseEnter, onMouseMove, onMouseOut, onTouchStart, onTouchMove, onTouchEnd, calcImgBoundsDebounced]);
 
-		if (this.imgBounds) {
-			const target = e.target as HTMLElement;
-			const relX = (e.clientX - this.imgBounds.left) / target.clientWidth;
-			const relY = (e.clientY - this.imgBounds.top) / target.clientHeight;
+  // Magnifier classes
+  let mgClasses = "magnifying-glass";
+  if (showZoom) mgClasses += " visible";
+  if (mgShape === "circle") mgClasses += " circle";
 
-			this.setState({
-				mgOffsetX: mgMouseOffsetX,
-				mgOffsetY: mgMouseOffsetY,
-				relX,
-				relY,
-				showZoom: true,
-			});
-		}
-	};
+  return (
+    <div
+      className={`magnifier ${className}`}
+      style={{
+        width,
+        height,
+        overflow: mgShowOverflow ? "visible" : "hidden",
+      }}
+    >
+      <img
+        className="magnifier-image"
+        src={src}
+        width="100%"
+        height="100%"
+        {...otherProps}
+        onLoad={calcImgBounds}
+        ref={imgRef}
+        alt=""
+      />
 
-	onMouseOut = (): void => {
-		this.setState({
-			showZoom: false,
-		});
-	};
+      {imgBoundsRef.current && (
+        <div
+          className={mgClasses}
+          style={{
+            width: mgWidth,
+            height: mgHeight,
+            left: `calc(${relX * 100}% - ${mgWidth / 2}px + ${mgOffsetX}px - ${mgBorderWidth}px)`,
+            top: `calc(${relY * 100}% - ${mgHeight / 2}px + ${mgOffsetY}px - ${mgBorderWidth}px)`,
+            backgroundImage: `url("${zoomImgSrc || src}")`,
+            backgroundPosition: `calc(${relX * 100}% + ${mgWidth / 2}px - ${relX * mgWidth}px) calc(${relY * 100}% + ${mgHeight / 2}px - ${relY * mgWidth}px)`,
+            backgroundSize: `${zoomFactor * (imgBoundsRef.current?.width || 0)}% ${zoomFactor *
+              (imgBoundsRef.current?.height || 0)}%`,
+            borderWidth: mgBorderWidth,
+          }}
+        />
+      )}
+    </div>
+  );
+};
 
-	onTouchStart = (e: TouchEvent): void => {
-		e.preventDefault(); // Prevent mouse event from being fired
-
-		this.calcImgBounds();
-	};
-
-	onTouchMove = (e: TouchEvent): void => {
-		e.preventDefault(); // Disable scroll on touch
-
-		if (this.imgBounds) {
-			const target = e.target as HTMLElement;
-			const { mgTouchOffsetX, mgTouchOffsetY } = this.props;
-			const relX = (e.targetTouches[0].clientX - this.imgBounds.left) / target.clientWidth;
-			const relY = (e.targetTouches[0].clientY - this.imgBounds.top) / target.clientHeight;
-
-			// Only show magnifying glass if touch is inside image
-			if (relX >= 0 && relY >= 0 && relX <= 1 && relY <= 1) {
-				this.setState({
-					mgOffsetX: mgTouchOffsetX,
-					mgOffsetY: mgTouchOffsetY,
-					relX,
-					relY,
-					showZoom: true,
-				});
-			} else {
-				this.setState({
-					showZoom: false,
-				});
-			}
-		}
-	};
-
-	onTouchEnd = (): void => {
-		this.setState({
-			showZoom: false,
-		});
-	};
-
-	calcImgBounds = (): void => {
-		if (this.img) {
-			this.imgBounds = this.img.getBoundingClientRect();
-		}
-	};
-
-	render = (): React.ReactElement => {
-		/* eslint-disable @typescript-eslint/no-unused-vars */
-		const {
-			src,
-			width,
-			height,
-			className,
-			zoomImgSrc,
-			zoomFactor,
-			mgHeight,
-			mgWidth,
-			mgBorderWidth,
-			mgMouseOffsetX,
-			mgMouseOffsetY,
-			mgTouchOffsetX,
-			mgTouchOffsetY,
-			mgShape,
-			mgShowOverflow,
-			...otherProps
-		} = this.props;
-		/* eslint-enable @typescript-eslint/no-unused-vars */
-		const { mgOffsetX, mgOffsetY, relX, relY, showZoom } = this.state;
-
-		// Show/hide magnifying glass (opacity needed for transition)
-		let mgClasses = "magnifying-glass";
-		if (showZoom) {
-			mgClasses += " visible";
-		}
-		if (mgShape === "circle") {
-			mgClasses += " circle";
-		}
-
-		return (
-			<div
-				className={`magnifier ${className}`}
-				style={{
-					width,
-					height,
-					overflow: mgShowOverflow ? "visible" : "hidden",
-				}}
-			>
-				{/* eslint-disable-next-line jsx-a11y/alt-text */}
-				<img
-					className="magnifier-image"
-					src={src}
-					width="100%"
-					height="100%"
-					{...otherProps}
-					onLoad={(): void => {
-						this.calcImgBounds();
-					}}
-					ref={(img: HTMLImageElement): void => {
-						this.img = img;
-					}}
-				/>
-				{this.imgBounds && (
-					<div
-						className={mgClasses}
-						style={{
-							width: mgWidth,
-							height: mgHeight,
-							left: `calc(${relX * 100}% - ${mgWidth / 2}px + ${mgOffsetX}px - ${mgBorderWidth}px)`,
-							top: `calc(${relY * 100}% - ${mgHeight / 2}px + ${mgOffsetY}px - ${mgBorderWidth}px)`,
-							backgroundImage: `url("${zoomImgSrc || src}")`,
-							backgroundPosition: `calc(${relX * 100}% + ${mgWidth / 2}px - ${relX *
-								mgWidth}px) calc(${relY * 100}% + ${mgHeight / 2}px - ${relY * mgWidth}px)`,
-							backgroundSize: `${zoomFactor * this.imgBounds.width}% ${zoomFactor *
-								this.imgBounds.height}%`,
-							borderWidth: mgBorderWidth,
-						}}
-					/>
-				)}
-			</div>
-		);
-	};
-}
+export default Magnifier;
